@@ -1,6 +1,6 @@
 (()=>{
 'use strict';
-const supported=['en','sv','es','fr','de','tr'];
+const supported=['en','sv','es','fr','de','tr','nb','da','fi'];
 const dict=window.ALGO_TRANSLATIONS||{};
 const select=document.getElementById('global-language')||document.getElementById('lang');
 let lang=localStorage.getItem('algolodge-lang')||'en';if(!supported.includes(lang))lang='en';
