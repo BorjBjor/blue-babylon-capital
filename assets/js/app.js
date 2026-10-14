@@ -1,13 +1,13 @@
 // AlgoLodge English-first build. Language selector reserved for future translations.
-const items=[['Vitalik','Ξ','crypto','Systematic crypto trading strategy.'],['Satoshi','₿','crypto','Rule-based approach to crypto markets.'],['Krypto Knight','♞','crypto','Systematic strategy for digital assets.'],['Gold Bug','◆','commodity','Systematic approach to gold markets.'],['Hot Commodities','↗','commodity','Systematic approach to commodity markets.'],['Soft Commodities','◈','commodity','Systematic approach to soft commodities.']];
-const steps=[['Explore strategies','Review the approach, risks and verified results when published.'],['Check eligibility','Confirm CFD and DupliTrade availability in your country.'],['Open a broker account','Apply with AvaTrade where eligible and complete its checks.'],['Connect DupliTrade','Link an eligible account and select an available strategy.'],['Set risk & monitor','Understand allocation, costs and risk before activating copying.']];
+const items=[['Vitalik','Ξ','crypto','Systematisk strategi för kryptohandel.'],['Satoshi','₿','crypto','Regelbaserad handel på kryptomarknader.'],['Krypto Knight','♞','crypto','Systematisk strategi för digitala tillgångar.'],['Gold Bug','◆','commodity','Systematisk handel på guldmarknaden.'],['Hot Commodities','↗','commodity','Systematisk handel på råvarumarknader.'],['Soft Commodities','◈','commodity','Systematisk handel med mjuka råvaror.']];
+const steps=[['Utforska strategier','Granska metod, risker och verifierade resultat när de publiceras.'],['Kontrollera behörighet','Kontrollera att CFD-handel och DupliTrade erbjuds i ditt land.'],['Öppna mäklarkonto','Ansök hos AvaTrade där det är möjligt och genomför deras kontroller.'],['Anslut DupliTrade','Koppla ett godkänt konto och välj en tillgänglig strategi.'],['Ställ in risk och följ upp','Förstå kapitalfördelning, kostnader och risk innan du aktiverar kopiering.']];
 
 function renderCards(){
  for(const group of ['crypto','commodity']){
   const container=document.getElementById(group+'Cards');
   if(!container)continue;
   container.innerHTML=items.filter(x=>x[2]===group).map(([name,symbol,type,desc])=>
-  `<article class="strategy-card"><div class="card-top"><span class="strategy-symbol">${symbol}</span><span class="card-tag">${type==='crypto'?'CRYPTO CFD':'COMMODITY CFD'}</span></div><h3>${name}</h3><p>${desc}</p><a class="card-bottom" href="strategy.html?name=${encodeURIComponent(name)}">View historical data ↗</a></article>`).join('');
+  `<article class="strategy-card"><div class="card-top"><span class="strategy-symbol">${symbol}</span><span class="card-tag">${type==='crypto'?'KRYPTO-CFD':'RÅVARU-CFD'}</span></div><h3>${name}</h3><p>${desc}</p><a class="card-bottom" href="strategy.html?name=${encodeURIComponent(name)}">Visa historik ↗</a></article>`).join('');
  }
  const stepsEl=document.getElementById('steps');
  if(stepsEl)stepsEl.innerHTML=steps.map(([title,desc],i)=>`<div class="step"><div class="step-num">0${i+1} / 05</div><h3>${title}</h3><p>${desc}</p></div>`).join('');
