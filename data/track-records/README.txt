@@ -1,0 +1,1 @@
+PUBLIC EXPORTS ONLY. Do not upload the original source workbook. Monthly account values are source values, not verified live CFD returns. Monthly change and drawdown assume no cash flows; source workbook includes unrelated private information.
