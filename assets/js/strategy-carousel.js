@@ -6,7 +6,7 @@ const root=$('strategy-carousel');if(!root)return;
 const img=$('carousel-chart'),plot=img.closest('.carousel-plot'),dots=$('carousel-dots');
 let index=0,locked=false;
 let timer=null, hovered=false, focused=false, visible=true;
-const INTERVAL=5600;
+const INTERVAL=2800;
 const stop=()=>{if(timer!==null){clearInterval(timer);timer=null}};
 const shouldPlay=()=>!hovered&&!focused&&visible&&!document.hidden&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 function start(){stop();if(shouldPlay())timer=setInterval(()=>{if(!locked)render(index+1)},INTERVAL)}
@@ -44,8 +44,8 @@ function render(i,animate=true){
   plot.classList.remove('carousel-slide-out-left','carousel-slide-out-right');
   apply();
   plot.classList.add(direction<0?'carousel-slide-in-left':'carousel-slide-in-right');
-  window.setTimeout(()=>{plot.classList.remove('carousel-slide-in-left','carousel-slide-in-right');locked=false},270);
- },190);
+  window.setTimeout(()=>{plot.classList.remove('carousel-slide-in-left','carousel-slide-in-right');locked=false},220);
+ },170);
 }
 items.forEach((x,i)=>{
  const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Visa '+x.name);

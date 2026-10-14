@@ -156,3 +156,12 @@ body.dark .hero-active .carousel-stat{background:#20374c!important;border-color:
 @media(max-width:950px){.hero-active{padding-top:22px!important}}
 @media(max-width:600px){.hero-active .hero-visual{padding:15px 18px!important}.hero-active .carousel-stage{margin:0 4px}.hero-active .carousel-stage .carousel-arrow{opacity:.55;pointer-events:auto;width:23px!important;height:61px!important}.hero-active .carousel-stage .carousel-arrow-prev{left:-22px!important}.hero-active .carousel-stage .carousel-arrow-next{right:-22px!important}.hero-active .carousel-stat{padding:9px 7px!important;flex-direction:column;align-items:flex-start!important}.hero-active .carousel-stat strong{font-size:15px!important}.hero-active .carousel-stat span{font-size:10px!important}}
 @media(prefers-reduced-motion:reduce){.hero-active .carousel-stage .carousel-plot{animation:none!important}}
+
+/* 3.27: gentle crossfade instead of directional sliding */
+@keyframes algo-out-left{from{opacity:1}to{opacity:0}}
+@keyframes algo-out-right{from{opacity:1}to{opacity:0}}
+@keyframes algo-in-left{from{opacity:0}to{opacity:1}}
+@keyframes algo-in-right{from{opacity:0}to{opacity:1}}
+.hero-active .carousel-plot.carousel-slide-out-left,.hero-active .carousel-plot.carousel-slide-out-right{animation-duration:.17s!important;animation-timing-function:ease-in!important}
+.hero-active .carousel-plot.carousel-slide-in-left,.hero-active .carousel-plot.carousel-slide-in-right{animation-duration:.22s!important;animation-timing-function:ease-out!important}
+@media(prefers-reduced-motion:reduce){.hero-active .carousel-plot{animation:none!important}}
