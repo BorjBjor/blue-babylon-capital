@@ -12,7 +12,7 @@ function close(){menu.hidden=true;button.setAttribute('aria-expanded','false')}
 button.addEventListener('click',()=>{menu.hidden=!menu.hidden;button.setAttribute('aria-expanded',String(!menu.hidden))});
 document.addEventListener('click',e=>{if(!wrapper.contains(e.target))close()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
-select.addEventListener('change',update);
+select.addEventListener('change',()=>{update(); document.documentElement.lang='en';});
 select.classList.add('flag-native-select');
 select.parentNode.insertBefore(wrapper,select);
 wrapper.append(select,button,menu);

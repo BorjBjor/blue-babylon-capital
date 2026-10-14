@@ -1,12 +1,7 @@
-# AlgoLodge website – structure
-
-GitHub Pages publishes from main / (root). Keep index.html, results.html, strategy.html and CNAME at root.
-
-- `assets/images/` – original AlgoLodge, AvaTrade and DupliTrade logos
-- `assets/css/` – styles for home, results and strategy pages
-- `assets/js/` – scripts for home, results and strategy pages
-- `data/` – preliminary performance data; replace or remove before public launch
-
-The HTML pages reference assets via relative paths. The results script loads `data/performance-data.json`.
-
-This is a restructuring of the existing 2.5 site, not a new redesign. Keep CNAME unchanged.
+# AlgoLodge — English-first development
+All pages currently in English. Flags are retained as a visual language menu for future work.
+No translation dictionaries are included. Do not publish translated claims yet.
+Structure: root HTML, assets/css, assets/js, assets/images, assets/flags, data.
+Keep CNAME and .nojekyll for GitHub Pages.
+Delete from repo (if present): assets/js/i18n.js, assets/js/i18n-data.js, assets/css/i18n.css.
+Other root-level legacy CSS/JS/logo files should be deleted only after confirming this package works.
