@@ -13,3 +13,7 @@ body.dark .flag-current,[data-theme=dark] .flag-current{background:#16283e;color
 body.dark .flag-menu,[data-theme=dark] .flag-menu{background:#16283e;color:#f5f7fa;border-color:#40546a}
 body.dark .flag-menu button:hover,body.dark .flag-menu button[aria-checked=true],[data-theme=dark] .flag-menu button:hover,[data-theme=dark] .flag-menu button[aria-checked=true]{background:#2c4562}
 body.dark .flag-language-name,[data-theme=dark] .flag-language-name{color:#b7c7d8}
+
+.flag-notice{position:absolute;right:0;top:calc(100% + 8px);min-width:250px;max-width:300px;padding:12px 15px;background:#f1f5f9;color:#18324c;border:1px solid #d5dfe9;border-radius:8px;box-shadow:0 12px 26px #13294220;font-size:12px;line-height:1.5;z-index:1000}
+.flag-notice[hidden]{display:none}
+body.dark .flag-notice{background:#23374f;color:#f5f7fa;border-color:#4b627c}
