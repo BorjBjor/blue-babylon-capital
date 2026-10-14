@@ -1,0 +1,292 @@
+{
+  "note": "Static text-node audit; dynamic strings and regulatory review require separate validation.",
+  "pages": [
+    "index",
+    "results",
+    "strategy",
+    "how-to-invest",
+    "about-arkad"
+  ],
+  "coverage": [
+    {
+      "page": "index",
+      "language": "sv",
+      "total_segments": 95,
+      "translated_segments": 11,
+      "missing_segments": 84
+    },
+    {
+      "page": "index",
+      "language": "es",
+      "total_segments": 95,
+      "translated_segments": 11,
+      "missing_segments": 84
+    },
+    {
+      "page": "index",
+      "language": "fr",
+      "total_segments": 95,
+      "translated_segments": 10,
+      "missing_segments": 85
+    },
+    {
+      "page": "index",
+      "language": "de",
+      "total_segments": 95,
+      "translated_segments": 10,
+      "missing_segments": 85
+    },
+    {
+      "page": "index",
+      "language": "tr",
+      "total_segments": 95,
+      "translated_segments": 10,
+      "missing_segments": 85
+    },
+    {
+      "page": "index",
+      "language": "nb",
+      "total_segments": 95,
+      "translated_segments": 10,
+      "missing_segments": 85
+    },
+    {
+      "page": "index",
+      "language": "da",
+      "total_segments": 95,
+      "translated_segments": 10,
+      "missing_segments": 85
+    },
+    {
+      "page": "index",
+      "language": "fi",
+      "total_segments": 95,
+      "translated_segments": 10,
+      "missing_segments": 85
+    },
+    {
+      "page": "results",
+      "language": "sv",
+      "total_segments": 21,
+      "translated_segments": 8,
+      "missing_segments": 13
+    },
+    {
+      "page": "results",
+      "language": "es",
+      "total_segments": 21,
+      "translated_segments": 8,
+      "missing_segments": 13
+    },
+    {
+      "page": "results",
+      "language": "fr",
+      "total_segments": 21,
+      "translated_segments": 7,
+      "missing_segments": 14
+    },
+    {
+      "page": "results",
+      "language": "de",
+      "total_segments": 21,
+      "translated_segments": 7,
+      "missing_segments": 14
+    },
+    {
+      "page": "results",
+      "language": "tr",
+      "total_segments": 21,
+      "translated_segments": 7,
+      "missing_segments": 14
+    },
+    {
+      "page": "results",
+      "language": "nb",
+      "total_segments": 21,
+      "translated_segments": 7,
+      "missing_segments": 14
+    },
+    {
+      "page": "results",
+      "language": "da",
+      "total_segments": 21,
+      "translated_segments": 7,
+      "missing_segments": 14
+    },
+    {
+      "page": "results",
+      "language": "fi",
+      "total_segments": 21,
+      "translated_segments": 7,
+      "missing_segments": 14
+    },
+    {
+      "page": "strategy",
+      "language": "sv",
+      "total_segments": 29,
+      "translated_segments": 13,
+      "missing_segments": 16
+    },
+    {
+      "page": "strategy",
+      "language": "es",
+      "total_segments": 29,
+      "translated_segments": 13,
+      "missing_segments": 16
+    },
+    {
+      "page": "strategy",
+      "language": "fr",
+      "total_segments": 29,
+      "translated_segments": 12,
+      "missing_segments": 17
+    },
+    {
+      "page": "strategy",
+      "language": "de",
+      "total_segments": 29,
+      "translated_segments": 12,
+      "missing_segments": 17
+    },
+    {
+      "page": "strategy",
+      "language": "tr",
+      "total_segments": 29,
+      "translated_segments": 12,
+      "missing_segments": 17
+    },
+    {
+      "page": "strategy",
+      "language": "nb",
+      "total_segments": 29,
+      "translated_segments": 12,
+      "missing_segments": 17
+    },
+    {
+      "page": "strategy",
+      "language": "da",
+      "total_segments": 29,
+      "translated_segments": 12,
+      "missing_segments": 17
+    },
+    {
+      "page": "strategy",
+      "language": "fi",
+      "total_segments": 29,
+      "translated_segments": 12,
+      "missing_segments": 17
+    },
+    {
+      "page": "how-to-invest",
+      "language": "sv",
+      "total_segments": 62,
+      "translated_segments": 56,
+      "missing_segments": 6
+    },
+    {
+      "page": "how-to-invest",
+      "language": "es",
+      "total_segments": 62,
+      "translated_segments": 57,
+      "missing_segments": 5
+    },
+    {
+      "page": "how-to-invest",
+      "language": "fr",
+      "total_segments": 62,
+      "translated_segments": 51,
+      "missing_segments": 11
+    },
+    {
+      "page": "how-to-invest",
+      "language": "de",
+      "total_segments": 62,
+      "translated_segments": 51,
+      "missing_segments": 11
+    },
+    {
+      "page": "how-to-invest",
+      "language": "tr",
+      "total_segments": 62,
+      "translated_segments": 39,
+      "missing_segments": 23
+    },
+    {
+      "page": "how-to-invest",
+      "language": "nb",
+      "total_segments": 62,
+      "translated_segments": 39,
+      "missing_segments": 23
+    },
+    {
+      "page": "how-to-invest",
+      "language": "da",
+      "total_segments": 62,
+      "translated_segments": 39,
+      "missing_segments": 23
+    },
+    {
+      "page": "how-to-invest",
+      "language": "fi",
+      "total_segments": 62,
+      "translated_segments": 39,
+      "missing_segments": 23
+    },
+    {
+      "page": "about-arkad",
+      "language": "sv",
+      "total_segments": 57,
+      "translated_segments": 18,
+      "missing_segments": 39
+    },
+    {
+      "page": "about-arkad",
+      "language": "es",
+      "total_segments": 57,
+      "translated_segments": 18,
+      "missing_segments": 39
+    },
+    {
+      "page": "about-arkad",
+      "language": "fr",
+      "total_segments": 57,
+      "translated_segments": 17,
+      "missing_segments": 40
+    },
+    {
+      "page": "about-arkad",
+      "language": "de",
+      "total_segments": 57,
+      "translated_segments": 17,
+      "missing_segments": 40
+    },
+    {
+      "page": "about-arkad",
+      "language": "tr",
+      "total_segments": 57,
+      "translated_segments": 17,
+      "missing_segments": 40
+    },
+    {
+      "page": "about-arkad",
+      "language": "nb",
+      "total_segments": 57,
+      "translated_segments": 17,
+      "missing_segments": 40
+    },
+    {
+      "page": "about-arkad",
+      "language": "da",
+      "total_segments": 57,
+      "translated_segments": 17,
+      "missing_segments": 40
+    },
+    {
+      "page": "about-arkad",
+      "language": "fi",
+      "total_segments": 57,
+      "translated_segments": 17,
+      "missing_segments": 40
+    }
+  ]
+}
