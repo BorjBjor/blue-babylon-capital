@@ -17,5 +17,5 @@ select.classList.add('flag-native-select');
 select.parentNode.insertBefore(wrapper,select);
 wrapper.append(select,button,menu);
 const notice=document.createElement('div');notice.id='language-coming-soon';notice.className='flag-notice';notice.setAttribute('role','status');notice.hidden=true;wrapper.appendChild(notice);
-const preferred=localStorage.getItem('algolodge-language');if(preferred==='sv'||preferred==='en')select.value=preferred;update();
+const urlLanguage=new URLSearchParams(location.search).get('lang');const preferred=(urlLanguage==='sv'||urlLanguage==='en')?urlLanguage:localStorage.getItem('algolodge-language');if(preferred==='sv'||preferred==='en')select.value=preferred;update();
 })();
