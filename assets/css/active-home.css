@@ -130,3 +130,29 @@ body.dark .carousel-stat{background:#20374c;border-color:#37576c}body.dark .caro
 @keyframes algo-in-left{from{opacity:.1;transform:translateX(-18px) scale(.98)}to{opacity:1;transform:none}}
 @media(max-width:700px){.hero-active .carousel-arrow{width:23px;height:72px;font-size:29px}}
 @media(prefers-reduced-motion:reduce){.hero-active .carousel-plot{animation:none!important}}
+
+/* AlgoLodge 3.25 – automatic gallery and refined card */
+.hero-active{padding-top:18px!important;padding-bottom:28px!important;align-items:center!important}
+.hero-active .hero-visual{padding:18px 22px 19px!important;min-height:0!important;overflow:visible!important}
+.hero-active .carousel-topline{margin-bottom:4px}
+.hero-active .carousel-title-row{margin-bottom:11px}
+.hero-active .carousel-heading h2{font-size:clamp(25px,2.1vw,34px);margin-bottom:5px}
+.hero-active .carousel-stage{position:relative;isolation:isolate;margin:0 7px}
+.hero-active .carousel-stage .carousel-plot{overflow:hidden;border-radius:13px}
+.hero-active .carousel-stage .carousel-arrow{position:absolute!important;top:50%!important;transform:translateY(-50%)!important;display:grid!important;place-items:center!important;z-index:10;width:27px!important;height:80px!important;max-height:50%!important;border:1px solid rgba(68,109,131,.16)!important;border-radius:11px!important;background:rgba(225,238,246,.53)!important;color:#245572!important;box-shadow:0 3px 12px rgba(20,50,70,.06);backdrop-filter:blur(6px);cursor:pointer;font-size:32px!important;font-family:Arial,sans-serif;font-weight:300;opacity:0;pointer-events:none;transition:opacity .25s ease,background .2s ease!important}
+.hero-active .carousel-stage .carousel-arrow-prev{left:-34px!important;right:auto!important}
+.hero-active .carousel-stage .carousel-arrow-next{right:-34px!important;left:auto!important}
+.hero-active .strategy-carousel:hover .carousel-arrow,.hero-active .strategy-carousel:focus-within .carousel-arrow{opacity:1;pointer-events:auto}
+.hero-active .carousel-stage .carousel-arrow:hover{background:rgba(211,232,244,.82)!important}
+.hero-active .carousel-bottom{display:flex!important;flex-direction:column!important;gap:11px!important;align-items:stretch!important;margin-top:13px!important}
+.hero-active .carousel-stats{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;width:100%}
+.hero-active .carousel-stat{min-width:0;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:12px 13px!important;background:#f5f8fb!important;border:1px solid #e1eaf2!important;border-radius:10px!important}
+.hero-active .carousel-stat span{white-space:normal!important;margin:0!important;line-height:1.35;font-size:11px!important;color:#64778d!important}
+.hero-active .carousel-stat strong{white-space:nowrap;font-size:clamp(15px,1.25vw,19px)!important;line-height:1.2;letter-spacing:-.02em}
+.hero-active .carousel-readmore{width:100%!important;min-height:41px!important;padding:11px 15px!important;border-radius:10px!important;background:#105f9e!important;font-size:12px!important;white-space:normal!important;box-shadow:none!important}
+.hero-active .carousel-readmore:hover{background:#0b4b7d!important}
+.hero-active .carousel-dots{margin-top:13px!important}
+body.dark .hero-active .carousel-stat{background:#20374c!important;border-color:#3c5269!important}
+@media(max-width:950px){.hero-active{padding-top:22px!important}}
+@media(max-width:600px){.hero-active .hero-visual{padding:15px 18px!important}.hero-active .carousel-stage{margin:0 4px}.hero-active .carousel-stage .carousel-arrow{opacity:.55;pointer-events:auto;width:23px!important;height:61px!important}.hero-active .carousel-stage .carousel-arrow-prev{left:-22px!important}.hero-active .carousel-stage .carousel-arrow-next{right:-22px!important}.hero-active .carousel-stat{padding:9px 7px!important;flex-direction:column;align-items:flex-start!important}.hero-active .carousel-stat strong{font-size:15px!important}.hero-active .carousel-stat span{font-size:10px!important}}
+@media(prefers-reduced-motion:reduce){.hero-active .carousel-stage .carousel-plot{animation:none!important}}

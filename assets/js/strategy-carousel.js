@@ -5,6 +5,17 @@ const $=id=>document.getElementById(id);
 const root=$('strategy-carousel');if(!root)return;
 const img=$('carousel-chart'),plot=img.closest('.carousel-plot'),dots=$('carousel-dots');
 let index=0,locked=false;
+let timer=null, hovered=false, focused=false, visible=true;
+const INTERVAL=5600;
+const stop=()=>{if(timer!==null){clearInterval(timer);timer=null}};
+const shouldPlay=()=>!hovered&&!focused&&visible&&!document.hidden&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function start(){stop();if(shouldPlay())timer=setInterval(()=>{if(!locked)render(index+1)},INTERVAL)}
+root.addEventListener('mouseenter',()=>{hovered=true;stop()});
+root.addEventListener('mouseleave',()=>{hovered=false;start()});
+root.addEventListener('focusin',()=>{focused=true;stop()});
+root.addEventListener('focusout',()=>{focused=root.contains(document.activeElement);if(!focused)start()});
+document.addEventListener('visibilitychange',start);
+const observer=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible)start();else stop()},{threshold:.15});observer.observe(root);
 const monthNames=['januari','februari','mars','april','maj','juni','juli','augusti','september','oktober','november','december'];
 function niceDate(iso){const [y,m]=iso.split('-').map(Number);return monthNames[m-1]+' '+y}
 function percent(n){return n===null?'—':(n>0?'+':'')+n.toLocaleString('sv-SE',{minimumFractionDigits:2,maximumFractionDigits:2})+' %'}
@@ -38,15 +49,15 @@ function render(i,animate=true){
 }
 items.forEach((x,i)=>{
  const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Visa '+x.name);
- b.addEventListener('click',()=>render(i));dots.appendChild(b);
+ b.addEventListener('click',()=>{render(i);start()});dots.appendChild(b);
  const preload=new Image();preload.src='assets/images/'+x.slug+'-gallery.png';
 });
 $('carousel-prev').textContent='‹';$('carousel-next').textContent='›';
-$('carousel-prev').addEventListener('click',()=>render(index-1));
-$('carousel-next').addEventListener('click',()=>render(index+1));
+$('carousel-prev').addEventListener('click',()=>{render(index-1);start()});
+$('carousel-next').addEventListener('click',()=>{render(index+1);start()});
 root.addEventListener('keydown',e=>{
  if(e.key==='ArrowLeft'){e.preventDefault();render(index-1)}
  if(e.key==='ArrowRight'){e.preventDefault();render(index+1)}
 });
-render(0,false);
+render(0,false);start();
 })();
