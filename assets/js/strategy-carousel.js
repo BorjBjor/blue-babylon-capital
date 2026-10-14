@@ -1,30 +1,52 @@
-/* AlgoLodge 3.18 – strategy gallery. Never assign results of one strategy to another. */
+/* AlgoLodge 3.23 – verified monthly workbook values, six individual charts. */
 (()=>{
-const items=[
- {name:'Hot Commodities',period:'Mars 2020 – september 2026',actual:true},
- {name:'Satoshi',period:'Resultatperiod tillkommer',actual:false},
- {name:'Vitalik',period:'Resultatperiod tillkommer',actual:false},
- {name:'Gold Bug',period:'Resultatperiod tillkommer',actual:false},
- {name:'Soft Commodities',period:'Resultatperiod tillkommer',actual:false},
- {name:'Krypto Knight',period:'Resultatperiod tillkommer',actual:false}
-];
-const $=id=>document.getElementById(id),root=$('strategy-carousel');if(!root)return;
-let index=0;const dots=$('carousel-dots');
-items.forEach((x,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Visa '+x.name);b.addEventListener('click',()=>render(i));dots.append(b)});
-function render(i){
- index=(i+items.length)%items.length;const x=items[index];
- $('carousel-title').textContent=x.name;
- $('carousel-subtitle').textContent=x.period;
- $('carousel-counter').textContent=(index+1)+' / '+items.length;
- const a=$('carousel-readmore');a.href='strategy.html?name='+encodeURIComponent(x.name);a.textContent='Läs mer om '+x.name+' ↗';
- const img=$('carousel-chart');img.alt=x.actual?'Historisk kontovärdesgraf för Hot Commodities, mars 2020–september 2026':'Illustrativ grafmall från Hot Commodities, inte resultat för '+x.name;
- $('carousel-watermark').hidden=x.actual;
- $('carousel-watermark').textContent='EXEMPELGRAF · INTE '+x.name.toUpperCase()+'S RESULTAT';
- // Do not invent performance metrics: figures appear once actual monthly values are supplied.
- for(const key of ['carousel-since','carousel-year','carousel-month'])$(key).textContent='—';
- [...dots.children].forEach((b,j)=>b.setAttribute('aria-current',String(j===index)));
+const items=[{"name": "Hot Commodities", "slug": "hot-commodities", "start": "2020-03-31", "end": "2026-09-30", "since": 189.04, "year": -10.26, "month": -4.37, "points": 79}, {"name": "Satoshi", "slug": "satoshi", "start": "2022-05-31", "end": "2026-09-30", "since": 72.8, "year": -1.26, "month": 0.06, "points": 53}, {"name": "Vitalik", "slug": "vitalik", "start": "2022-05-31", "end": "2026-09-30", "since": 222.0, "year": -2.87, "month": 0.59, "points": 53}, {"name": "Gold Bug", "slug": "gold-bug", "start": "2018-11-30", "end": "2026-09-30", "since": 238.35, "year": 6.13, "month": -0.02, "points": 95}, {"name": "Soft Commodities", "slug": "soft-commodities", "start": "2020-03-31", "end": "2026-09-30", "since": 179.87, "year": 5.52, "month": -1.01, "points": 79}, {"name": "Krypto Knight", "slug": "krypto-knight", "start": "2018-12-31", "end": "2026-09-30", "since": 47.99, "year": -1.65, "month": 2.52, "points": 94}];
+const $=id=>document.getElementById(id);
+const root=$('strategy-carousel');if(!root)return;
+const img=$('carousel-chart'),plot=img.closest('.carousel-plot'),dots=$('carousel-dots');
+let index=0,locked=false;
+const monthNames=['januari','februari','mars','april','maj','juni','juli','augusti','september','oktober','november','december'];
+function niceDate(iso){const [y,m]=iso.split('-').map(Number);return monthNames[m-1]+' '+y}
+function percent(n){return n===null?'—':(n>0?'+':'')+n.toLocaleString('sv-SE',{minimumFractionDigits:2,maximumFractionDigits:2})+' %'}
+function render(i,animate=true){
+ if(locked)return;
+ const next=(i+items.length)%items.length,x=items[next],direction=next===((index+items.length-1)%items.length)?-1:1;
+ const apply=()=>{
+  index=next;
+  $('carousel-title').textContent=x.name;
+  $('carousel-subtitle').textContent=niceDate(x.start)+' – '+niceDate(x.end);
+  $('carousel-counter').textContent=(index+1)+' / '+items.length;
+  $('carousel-readmore').href='strategy.html?name='+encodeURIComponent(x.name);
+  $('carousel-readmore').textContent='Läs mer om '+x.name+' ↗';
+  img.src='assets/images/'+x.slug+'-gallery.png';
+  img.alt='Månatlig kontovärdesutveckling för '+x.name+', indexerad till 100 från '+niceDate(x.start)+' till '+niceDate(x.end);
+  const wm=$('carousel-watermark');if(wm)wm.hidden=true;
+  for(const [id,n] of [['carousel-since',x.since],['carousel-year',x.year],['carousel-month',x.month]]){
+   const el=$(id);el.textContent=percent(n);el.classList.toggle('negative',n<0);el.classList.toggle('positive',n>0);
+  }
+  [...dots.children].forEach((b,j)=>b.setAttribute('aria-current',String(j===index)));
+ };
+ if(!animate||window.matchMedia('(prefers-reduced-motion: reduce)').matches){apply();return}
+ locked=true;
+ plot.classList.add(direction<0?'carousel-slide-out-right':'carousel-slide-out-left');
+ window.setTimeout(()=>{
+  plot.classList.remove('carousel-slide-out-left','carousel-slide-out-right');
+  apply();
+  plot.classList.add(direction<0?'carousel-slide-in-left':'carousel-slide-in-right');
+  window.setTimeout(()=>{plot.classList.remove('carousel-slide-in-left','carousel-slide-in-right');locked=false},270);
+ },190);
 }
-$('carousel-prev').addEventListener('click',()=>render(index-1));$('carousel-next').addEventListener('click',()=>render(index+1));
-root.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();render(index-1)}if(e.key==='ArrowRight'){e.preventDefault();render(index+1)}});
-render(0);
+items.forEach((x,i)=>{
+ const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Visa '+x.name);
+ b.addEventListener('click',()=>render(i));dots.appendChild(b);
+ const preload=new Image();preload.src='assets/images/'+x.slug+'-gallery.png';
+});
+$('carousel-prev').textContent='‹';$('carousel-next').textContent='›';
+$('carousel-prev').addEventListener('click',()=>render(index-1));
+$('carousel-next').addEventListener('click',()=>render(index+1));
+root.addEventListener('keydown',e=>{
+ if(e.key==='ArrowLeft'){e.preventDefault();render(index-1)}
+ if(e.key==='ArrowRight'){e.preventDefault();render(index+1)}
+});
+render(0,false);
 })();
