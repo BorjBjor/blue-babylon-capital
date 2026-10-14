@@ -10,7 +10,7 @@
 .hero-active .hero-actions .primary{background:#0867cc!important;border-color:#0867cc!important}
 .hero-active .hero-actions .primary:hover{background:#044e9c!important}
 .hero-active .hero-visual{min-height:390px;display:flex;flex-direction:column;justify-content:center;padding:22px 22px 16px;position:relative;overflow:visible;border-radius:19px;box-shadow:0 18px 55px rgba(14,43,77,.12);background:rgba(255,255,255,.87);border:1px solid rgba(178,199,222,.65);backdrop-filter:blur(4px)}
-.hero-active .hero-visual::before{content:"";position:absolute;z-index:-1;inset:-58px -28px -25px -150px;background:linear-gradient(90deg,rgba(255,255,255,.93) 0%,rgba(255,255,255,.36) 36%,rgba(255,255,255,.06) 70%),url('../images/hero-bull.webp') left 35% / auto 75% no-repeat,url('../images/hero-bear.webp') right center / auto 98% no-repeat;opacity:.37;pointer-events:none}
+.hero-active .hero-visual::before{content:"";position:absolute;z-index:-1;inset:-58px -28px -25px -150px;background:linear-gradient(90deg,rgba(255,255,255,.93) 0%,rgba(255,255,255,.36) 36%,rgba(255,255,255,.06) 70%),url('../images/hero-bull.webp') left 35% / auto 75% no-repeat;opacity:.37;pointer-events:none}
 .live-chart-heading{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.13em;color:#23456b;margin-bottom:18px;flex-wrap:wrap}
 .live-dot{width:7px;height:7px;border-radius:50%;background:#208f87;box-shadow:0 0 0 5px #208f8717}
 .illustration-label{margin-left:auto;font-size:9px;letter-spacing:.02em;color:#697d91}
