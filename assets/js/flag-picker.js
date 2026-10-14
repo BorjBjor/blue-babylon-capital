@@ -7,15 +7,15 @@ const button=document.createElement('button');button.type='button';button.classN
 const menu=document.createElement('div');menu.className='flag-menu';menu.hidden=true;menu.setAttribute('role','menu');
 function img(code){return '<img src="assets/flags/'+code+'.svg" alt="" width="23" height="16">'}
 function update(){let v=codes[select.value]?select.value:'en';const [f,label]=codes[v];button.innerHTML=img(f)+'<span>'+label+'</span><span class="flag-chevron" aria-hidden="true">⌄</span>';menu.querySelectorAll('button').forEach(b=>{b.setAttribute('aria-checked',String(b.dataset.lang===v));});}
-Object.entries(codes).forEach(([key,[flag,label,name]])=>{let b=document.createElement('button');b.type='button';b.dataset.lang=key;b.setAttribute('role','menuitemradio');b.innerHTML=img(flag)+'<span>'+label+'</span><span class="flag-language-name">'+name+'</span>';b.addEventListener('click',()=>{if(key!=='en'){const notice=document.getElementById('language-coming-soon');if(notice){notice.textContent=name+' translation is coming soon. The website is currently in English.';notice.hidden=false;}close();button.focus();return;}select.value='en';select.dispatchEvent(new Event('change',{bubbles:true}));update();close();button.focus()});menu.appendChild(b)});
+Object.entries(codes).forEach(([key,[flag,label,name]])=>{let b=document.createElement('button');b.type='button';b.dataset.lang=key;b.setAttribute('role','menuitemradio');b.innerHTML=img(flag)+'<span>'+label+'</span><span class="flag-language-name">'+name+'</span>';b.addEventListener('click',()=>{if(key!=='en'&&key!=='sv'){const notice=document.getElementById('language-coming-soon');if(notice){notice.textContent=name+' translation is coming soon. The website is currently in English.';notice.hidden=false;}close();button.focus();return;}select.value=key;select.dispatchEvent(new Event('change',{bubbles:true}));update();close();button.focus()});menu.appendChild(b)});
 function close(){menu.hidden=true;button.setAttribute('aria-expanded','false')}
 button.addEventListener('click',()=>{menu.hidden=!menu.hidden;button.setAttribute('aria-expanded',String(!menu.hidden))});
 document.addEventListener('click',e=>{if(!wrapper.contains(e.target))close()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
-select.addEventListener('change',()=>{update(); document.documentElement.lang='en';});
+select.addEventListener('change',()=>{update();});
 select.classList.add('flag-native-select');
 select.parentNode.insertBefore(wrapper,select);
 wrapper.append(select,button,menu);
 const notice=document.createElement('div');notice.id='language-coming-soon';notice.className='flag-notice';notice.setAttribute('role','status');notice.hidden=true;wrapper.appendChild(notice);
-update();
+const preferred=localStorage.getItem('algolodge-language');if(preferred==='sv'||preferred==='en')select.value=preferred;update();
 })();
