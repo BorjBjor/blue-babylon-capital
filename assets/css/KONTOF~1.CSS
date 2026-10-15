@@ -1,0 +1,7 @@
+/* AlgoLodge 4.10: Kontoform first, all fees retained in the compact top statistics band. */
+.al-stats-secondary{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:0!important;row-gap:16px!important}
+.al-stats-secondary .al-stat-detail{min-width:0!important;padding:10px 15px!important;border-top:1px solid #dce6ef!important;border-right:1px solid #dce6ef!important}
+.al-stats-secondary .al-stat-detail:nth-child(-n+4){border-top:0!important}
+.al-stats-secondary .al-stat-detail:nth-child(4n){border-right:0!important}
+@media(max-width:850px){.al-stats-secondary{grid-template-columns:repeat(2,minmax(0,1fr))!important}.al-stats-secondary .al-stat-detail:nth-child(n){border-top:1px solid #dce6ef!important;border-right:1px solid #dce6ef!important}.al-stats-secondary .al-stat-detail:nth-child(-n+2){border-top:0!important}.al-stats-secondary .al-stat-detail:nth-child(2n){border-right:0!important}}
+@media(max-width:480px){.al-stats-secondary .al-stat-detail{padding:10px 9px!important}.al-stats-secondary .al-stat-detail span{font-size:10px!important}.al-stats-secondary .al-stat-detail strong{font-size:12px!important}}

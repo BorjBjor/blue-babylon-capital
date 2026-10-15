@@ -1,0 +1,21 @@
+/* AlgoLodge 4.11 — subtle, accessible explanations */
+.al-stats-band{overflow:visible!important;position:relative;isolation:isolate}
+.al-stats-secondary{border-radius:0 0 15px 15px}
+.al-stat-detail{position:relative;overflow:visible!important}
+.al-stat-label-wrap{display:flex;align-items:center;gap:5px;min-height:21px}
+.al-stat-label-wrap .al-stat-label-text{font:600 10px/1.35 Inter,system-ui,sans-serif;color:#617b90}
+.al-stat-help{position:relative;display:inline-flex;align-items:center;flex:0 0 auto;z-index:2}
+.al-stat-help:has(:hover),.al-stat-help:has(:focus-visible){z-index:40}
+.al-stat-help-trigger{appearance:none;width:15px;height:15px;display:inline-grid;place-items:center;border-radius:50%;background:#e2edf6;border:1px solid #bdd1e2;color:#52758e;font:700 10px/1 Georgia,serif;padding:0;cursor:help;transition:background .15s,color .15s}
+.al-stat-help-trigger:hover,.al-stat-help-trigger:focus-visible{background:#1d6ba7;color:white;outline:2px solid #a8d2f4;outline-offset:2px}
+.al-stat-tooltip{position:absolute;left:50%;bottom:calc(100% + 13px);transform:translate(-50%,5px);width:clamp(225px,25vw,325px);max-width:calc(100vw - 28px);padding:13px 15px;background:#172b40;color:#f7fbff;border-radius:9px;box-shadow:0 12px 28px #071b3150;font:400 12px/1.6 Inter,system-ui,sans-serif;white-space:normal;text-align:left;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .14s ease,transform .14s ease,visibility .14s}
+.al-stat-tooltip:after{content:"";position:absolute;left:calc(50% - 6px);top:100%;border:6px solid transparent;border-top-color:#172b40}
+.al-stat-help:hover .al-stat-tooltip,.al-stat-help:focus-within .al-stat-tooltip{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.al-stat-detail:nth-child(4n+1) .al-stat-tooltip{left:-4px;transform:translate(0,5px)}
+.al-stat-detail:nth-child(4n+1) .al-stat-help:hover .al-stat-tooltip,.al-stat-detail:nth-child(4n+1) .al-stat-help:focus-within .al-stat-tooltip{transform:translate(0,0)}
+.al-stat-detail:nth-child(4n+1) .al-stat-tooltip:after{left:10px}
+.al-stat-detail:nth-child(4n) .al-stat-tooltip{left:auto;right:-8px;transform:translate(0,5px)}
+.al-stat-detail:nth-child(4n) .al-stat-help:hover .al-stat-tooltip,.al-stat-detail:nth-child(4n) .al-stat-help:focus-within .al-stat-tooltip{transform:translate(0,0)}
+.al-stat-detail:nth-child(4n) .al-stat-tooltip:after{left:auto;right:12px}
+@media(max-width:700px){.al-stat-tooltip{width:235px}.al-stat-detail:nth-child(2n+1) .al-stat-tooltip{left:-4px;right:auto;transform:translate(0,5px)}.al-stat-detail:nth-child(2n+1) .al-stat-help:hover .al-stat-tooltip,.al-stat-detail:nth-child(2n+1) .al-stat-help:focus-within .al-stat-tooltip{transform:translate(0,0)}.al-stat-detail:nth-child(2n) .al-stat-tooltip{left:auto;right:-4px;transform:translate(0,5px)}.al-stat-detail:nth-child(2n) .al-stat-help:hover .al-stat-tooltip,.al-stat-detail:nth-child(2n) .al-stat-help:focus-within .al-stat-tooltip{transform:translate(0,0)}}
+@media(prefers-reduced-motion:reduce){.al-stat-tooltip{transition:none}}

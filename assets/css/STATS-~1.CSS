@@ -1,0 +1,7 @@
+/* AlgoLodge 4.09 – seven compact verified monthly statistics */
+.al-stats-secondary{grid-template-columns:repeat(7,minmax(0,1fr))!important;gap:0!important}
+.al-stats-secondary .al-stat-detail{padding:0 10px!important;border-top:0!important}
+.al-stats-secondary .al-stat-detail:last-child{border-right:0!important}
+.al-metric-method{margin:-14px 2px 26px;font-size:11px;line-height:1.65;color:#718398}
+@media(max-width:1150px){.al-stats-secondary{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:13px 0!important}.al-stats-secondary .al-stat-detail:nth-child(4){border-right:0!important}.al-stats-secondary .al-stat-detail:nth-child(n+5){border-top:1px solid #dce6ef!important;padding-top:12px!important}}
+@media(max-width:680px){.al-stats-secondary{grid-template-columns:repeat(2,minmax(0,1fr))!important}.al-stats-secondary .al-stat-detail:nth-child(even){border-right:0!important}.al-stats-secondary .al-stat-detail:nth-child(odd){border-right:1px solid #dce6ef!important}.al-stats-secondary .al-stat-detail:nth-child(n+3){border-top:1px solid #dce6ef!important;padding-top:10px!important}}

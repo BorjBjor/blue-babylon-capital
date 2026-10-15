@@ -1,0 +1,21 @@
+/* AlgoLodge 4.08 – compact analytical ribbon, distinct from IASG cards */
+.al-stats-band{margin:22px 0 26px;border:1px solid #dbe6ef;border-radius:15px;background:#fff;box-shadow:0 7px 26px rgba(17,53,81,.045);overflow:hidden}
+.al-stats-primary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:21px 12px 20px}
+.al-stat-primary-cell{padding:0 22px;min-width:0;border-right:1px solid #e4ebf2;display:flex;flex-direction:column;gap:6px}
+.al-stat-primary-cell:last-child{border-right:0}
+.al-stat-label{color:#637c91;font:650 11px/1.4 Inter,system-ui,sans-serif;letter-spacing:.02em}
+.al-stat-number{color:#163c5e;font:700 clamp(22px,2.2vw,32px)/1.15 Inter,system-ui,sans-serif;letter-spacing:-.035em;white-space:nowrap}
+.al-stat-number.positive{color:#138777}.al-stat-number.negative{color:#c15151}
+.al-stats-secondary{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));background:#f2f7fb;border-top:1px solid #e0eaf2;padding:15px 12px}
+.al-stat-detail{display:flex;flex-direction:column;gap:5px;min-width:0;padding:0 13px;border-right:1px solid #dce6ef}
+.al-stat-detail:last-child{border-right:0}
+.al-stat-detail span{font:600 10px/1.35 Inter,system-ui,sans-serif;color:#617b90}
+.al-stat-detail strong{font:750 13px/1.4 Inter,system-ui,sans-serif;color:#183b59;overflow-wrap:anywhere}
+.al-stat-detail strong[title]{color:#8495a6}
+body.dark .al-stats-band{background:#1c3046;border-color:#3b536c}
+body.dark .al-stats-secondary{background:#172a40;border-color:#3b536c}
+body.dark .al-stat-primary-cell,body.dark .al-stat-detail{border-color:#3b536c}
+body.dark .al-stat-number,body.dark .al-stat-detail strong{color:#edf5ff}
+body.dark .al-stat-number.positive{color:#62c7ac}body.dark .al-stat-number.negative{color:#ff9292}
+@media(max-width:1020px){.al-stats-secondary{grid-template-columns:repeat(3,minmax(0,1fr));gap:15px 0}.al-stat-detail:nth-child(3){border-right:0}.al-stat-detail:nth-child(4),.al-stat-detail:nth-child(5),.al-stat-detail:nth-child(6){padding-top:10px;border-top:1px solid #dce6ef}}
+@media(max-width:620px){.al-stats-primary{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 0}.al-stat-primary-cell:nth-child(2){border-right:0}.al-stat-primary-cell:nth-child(3),.al-stat-primary-cell:nth-child(4){padding-top:15px;border-top:1px solid #e4ebf2}.al-stats-secondary{grid-template-columns:repeat(2,minmax(0,1fr))}.al-stat-detail:nth-child(3){border-right:1px solid #dce6ef}.al-stat-detail:nth-child(2n){border-right:0}.al-stat-detail:nth-child(n+3){padding-top:10px;border-top:1px solid #dce6ef}}

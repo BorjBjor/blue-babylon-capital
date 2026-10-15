@@ -1,0 +1,14 @@
+/* AlgoLodge 3.22 — compact footer refinement */
+.al-site-footer .al-footer-shell{padding-top:35px!important;padding-bottom:18px!important}
+.al-site-footer .al-footer-top{gap:46px!important;padding-bottom:28px!important}
+.al-site-footer .al-footer-brand{display:block!important;max-width:250px!important;width:100%!important;line-height:normal!important;overflow:visible!important;height:auto!important}
+.al-site-footer .al-footer-brand img{display:block!important;width:100%!important;max-width:100%!important;height:auto!important;max-height:none!important;object-fit:contain!important;object-position:left center!important;filter:none!important;clip-path:none!important;overflow:visible!important}
+.al-site-footer .al-footer-about p{font-size:12px!important;line-height:1.65!important;max-width:330px!important;margin:8px 0 0!important;font-weight:400!important}
+.al-site-footer h2{font-size:18px!important;margin-bottom:12px!important}
+.al-site-footer .al-footer-contact address,.al-site-footer .al-footer-contact a{font-size:12px!important;line-height:1.7!important}
+.al-site-footer .al-footer-bottom{padding-top:17px!important;font-size:11px!important;gap:14px!important}
+.al-site-footer .al-footer-bottom nav{gap:18px!important}
+.al-site-footer .al-footer-bottom a,.al-site-footer .al-footer-social{font-size:11px!important;font-weight:400!important}
+.al-site-footer .al-footer-social{gap:12px!important}
+.al-site-footer .al-footer-social .al-copyright{padding-left:12px!important}
+@media(max-width:600px){.al-site-footer .al-footer-top{grid-template-columns:1fr!important;gap:25px!important}.al-site-footer .al-footer-shell{padding:28px 20px 20px!important}.al-site-footer .al-footer-brand{max-width:215px!important}.al-site-footer .al-footer-bottom{flex-direction:column!important;align-items:flex-start!important}}

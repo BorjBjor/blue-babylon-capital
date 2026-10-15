@@ -1,0 +1,48 @@
+/* AlgoLodge 2.9 — responsive and navigation refinements */
+html{scroll-padding-top:96px}
+.skip-to-content{position:fixed;z-index:100;top:-80px;left:16px;background:#173655;color:white;padding:10px 18px;border-radius:8px}
+.skip-to-content:focus{top:12px}
+a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid #d28a31;outline-offset:3px}
+.header .nav{max-width:1250px}
+.header nav a{white-space:nowrap}
+.hero{min-height:0}
+.hero-visual{min-width:0}
+.hero .hero-copy{min-width:0}
+.hero h1{font-size:clamp(42px,4.7vw,68px)}
+.hero-visual svg{max-width:100%}
+.strategy-card{display:flex;flex-direction:column}
+.strategy-card .card-bottom{margin-top:auto}
+.section-top{gap:clamp(24px,5vw,70px)}
+@media(min-width:761px) and (max-width:1050px){
+ .nav{gap:12px}.header nav{gap:14px}
+ .header nav a{font-size:12px}
+ .hero{gap:26px;grid-template-columns:1fr 1fr}
+ .hero h1{font-size:clamp(39px,4.8vw,54px)}
+}
+@media(max-width:760px){
+ .header nav{box-shadow:0 15px 28px rgba(10,25,44,.10);max-height:calc(100dvh - 70px);overflow-y:auto}
+ .header nav a{display:block;padding:10px 8px;border-bottom:1px solid var(--line);font-size:15px}
+ .header nav a:last-child{border-bottom:0}
+ .header .nav{gap:8px}
+ .hero{padding-bottom:65px}
+ .hero .hero-actions{margin-bottom:35px}
+ .hero-visual{overflow:visible}
+ .floating-card{position:relative;right:auto;bottom:auto;margin-top:12px;min-width:0}
+ .hero-facts{flex-wrap:wrap}
+ .strategy-grid{gap:14px}
+ .trust-inner{justify-content:space-evenly}
+ .footer-right{gap:14px}
+}
+@media(max-width:480px){
+ .hero h1{font-size:clamp(34px,9vw,43px)}
+ .hero-actions .btn{flex:1;min-width:0;text-align:center;padding:12px 10px}
+ .broker-logo-list{flex-wrap:wrap}
+ .strategy-card{padding:21px}
+ .section-top h2{font-size:36px}
+ .other-programs{padding:20px}
+ .hero-facts div{flex:1;min-width:85px}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
