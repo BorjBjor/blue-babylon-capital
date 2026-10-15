@@ -1,0 +1,16 @@
+/* AlgoLodge 3.99 – approved city image meeting cards, unified booking buttons */
+.al-news-meeting-grid{gap:16px!important;align-items:stretch}
+.al-news-meeting{padding:24px 21px 23px!important;border-radius:18px!important;box-shadow:0 12px 27px rgba(24,60,96,.075)!important;align-items:stretch!important}
+.al-news-meeting-icon{width:154px!important;height:154px!important;max-width:100%;margin:0 0 18px!important;border-radius:50%!important;overflow:hidden;background:#edf5fb!important;border:8px solid #edf5fb;display:block!important;align-self:flex-start}
+.al-news-meeting-icon img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
+.al-news-meeting-type{font-size:11px!important;letter-spacing:.12em!important}
+.al-news-meeting h3{font-size:31px!important;margin:10px 0 13px!important}
+.al-meeting-date,.al-meeting-description{position:relative;padding-left:27px!important;display:block}
+.al-meeting-date:before{content:'▣';position:absolute;left:0;top:-2px;color:#b88a4d;font-size:18px}
+.al-meeting-description:before{content:'♧';position:absolute;left:1px;top:0;color:#b88a4d;font-size:20px}
+.al-news-meeting p{font-size:13px!important;line-height:1.75!important}
+.al-news-meeting a[data-meeting]{margin-top:auto!important;display:flex;align-items:center;justify-content:center;text-align:center;border:1px solid #c49757;border-radius:14px;padding:12px 15px;color:#ad7c3b!important;font-weight:750!important;font-size:14px!important;background:#fff;min-height:46px;transition:background .2s,transform .2s}
+.al-news-meeting a[data-meeting]:hover{background:#fff8ed;transform:translateY(-2px)}
+.al-news-meeting-foot a[data-meeting]{display:inline-flex;justify-content:center;align-items:center;border:1px solid #c49757;border-radius:12px;padding:11px 19px;color:#a87838!important;background:#fff;font-weight:750!important;white-space:nowrap}
+body.dark .al-news-meeting a[data-meeting],body.dark .al-news-meeting-foot a[data-meeting]{background:#263b52;color:#f1c993!important}
+@media(max-width:620px){.al-news-meeting-icon{width:130px!important;height:130px!important}.al-news-meeting h3{font-size:27px!important}}
