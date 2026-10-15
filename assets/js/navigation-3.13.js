@@ -10,17 +10,4 @@ if(menu&&nav){
  document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
  document.addEventListener('click',e=>{if(!e.target.closest('.al-header'))close()});
 }
-const theme=document.getElementById('theme')||document.getElementById('guide-theme');
-function syncTheme(){
- const dark=localStorage.getItem('algolodge-theme')==='dark';
- document.body.classList.toggle('dark',dark);
- document.documentElement.dataset.theme=dark?'dark':'light';
- if(theme)theme.textContent=dark?'☀':'☾';
-}
-if(theme)theme.addEventListener('click',e=>{
- e.stopImmediatePropagation();
- localStorage.setItem('algolodge-theme',document.body.classList.contains('dark')?'light':'dark');
- syncTheme();
-},true);
-syncTheme();
 })();

@@ -14,15 +14,6 @@ function renderCards(){
 }
 renderCards();
 document.documentElement.lang='en';
-const theme=document.getElementById('theme');
-function applyTheme(d){
- document.body.classList.toggle('dark',d);
- const icon=document.getElementById('themeIcon');if(icon)icon.textContent=d?'☀':'☾';
- if(theme)theme.setAttribute('aria-label',d?'Switch to light theme':'Switch to dark theme');
- localStorage.setItem('algolodge-theme',d?'dark':'light');
-}
-applyTheme(localStorage.getItem('algolodge-theme')==='dark');
-if(theme)theme.addEventListener('click',()=>applyTheme(!document.body.classList.contains('dark')));
 const menu=document.getElementById('menu');
 if(menu)menu.addEventListener('click',()=>{
  const nav=document.getElementById('nav');nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(nav.classList.contains('open')));

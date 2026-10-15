@@ -1,0 +1,124 @@
+
+/* AlgoLodge 4.20 – shared theme tokens and cross-page dark surfaces.
+   Applies to all primary pages, with dark-mode contrast and without changing content. */
+:root{
+ --al-night:#101c2c;
+ --al-panel:#1b3047;
+ --al-panel-soft:#223a53;
+ --al-border:#39516a;
+ --al-text:#eef5fc;
+ --al-muted:#bacbdc;
+ --al-accent:#d4ac73;
+}
+html[data-theme="dark"]{color-scheme:dark}
+html[data-theme="light"]{color-scheme:light}
+html[data-theme="dark"] body{
+ --bg:#101c2c;--surface:#1b3047;--soft:#20364e;--ink:#eef5fc;
+ --muted:#bacbdc;--line:#39516a;--accent:#d4ac73;
+ background:var(--al-night);color:var(--al-text);
+}
+html[data-theme="dark"] body :is(main,.iasg-page,.models-main,.events-page,.al-open-content,.al-contact-grid,.al-policy-main){
+ color:var(--al-text);
+}
+/* Header: same colors on every page */
+html[data-theme="dark"] :is(.al-header,.al-navigation,.al-dropdown-menu,.al-nav-dropdown .al-dropdown-menu){
+ background:#14283d!important;color:var(--al-text)!important;border-color:var(--al-border)!important;
+}
+html[data-theme="dark"] .al-header :is(a,button,span):not(.al-menu-cta){
+ color:var(--al-text)!important;
+}
+html[data-theme="dark"] .al-header .al-menu-cta{color:#fff!important}
+html[data-theme="dark"] .al-header :is(.al-theme,.al-mobile){
+ background:#203850!important;border-color:#3d5870!important;color:#fff!important;
+}
+/* Shared dark headings and body copy */
+html[data-theme="dark"] :is(
+ .iasg-page,.models-main,.events-page,.invest-wrap,.invest-trust,.invest-funding,
+ .invest-exit,.invest-faq,.five-steps-section,.roles-section,.al-contact-grid,
+ .al-open-content,.al-policy-main,.al-news-meetings,.al-news-original-copy
+) :is(h1,h2,h3,h4,strong){color:var(--al-text)}
+html[data-theme="dark"] :is(
+ .iasg-page,.models-main,.events-page,.invest-wrap,.invest-trust,.invest-funding,
+ .invest-exit,.invest-faq,.five-steps-section,.roles-section,.al-contact-grid,
+ .al-open-content,.al-policy-main,.al-news-meetings
+) :is(p,small,li,dt,dd){color:var(--al-muted)}
+/* Model catalogue and model detail */
+html[data-theme="dark"] :is(
+ .iasg-page,.models-main,.models-intro,.iasg-shell,.iasg-section,
+ .iasg-table-wrap,.models-full
+){background-color:transparent!important}
+html[data-theme="dark"] :is(
+ .iasg-card,.iasg-panel,.iasg-stats,.iasg-switcher,.iasg-facts,
+ .model-card,.model-panel,.model-profile,.model-detail-left,.model-card-chart,
+ .models-toolbar,.model-table-scroll,.iasg-table,.al-stats-band,.al-decision-profile
+){background:var(--al-panel)!important;border-color:var(--al-border)!important;color:var(--al-text)!important}
+html[data-theme="dark"] :is(.iasg-card,.iasg-panel,.model-card,.model-panel) :is(h2,h3,strong){color:var(--al-text)}
+html[data-theme="dark"] :is(.iasg-card,.iasg-panel,.model-card,.model-panel) :is(p,small,span:not(.positive):not(.negative)){color:var(--al-muted)}
+html[data-theme="dark"] :is(.iasg-switcher-links a,.model-card-link){background:var(--al-panel-soft);border-color:var(--al-border);color:#c8e8ff}
+html[data-theme="dark"] .iasg-switcher-links a[aria-current="page"]{background:#2676b3!important;color:#fff!important}
+html[data-theme="dark"] :is(.iasg-table,.model-table-scroll,.iasg-table-wrap) :is(th,td){
+ background:transparent;color:var(--al-text);border-color:var(--al-border)
+}
+html[data-theme="dark"] :is(.iasg-table,.model-table-scroll) tr:nth-child(even){background:#223a53}
+html[data-theme="dark"] :is(.iasg-table,.model-table-scroll) thead{background:#294660}
+html[data-theme="dark"] .al-stats-secondary{background:#172b41!important;border-color:var(--al-border)!important}
+html[data-theme="dark"] .al-stat-primary-cell,
+html[data-theme="dark"] .al-stat-detail{border-color:var(--al-border)!important}
+html[data-theme="dark"] .al-stat-detail strong{color:var(--al-text)}
+html[data-theme="dark"] .al-stat-number.positive{color:#75d3b9}
+html[data-theme="dark"] .al-stat-number.negative{color:#ff9292}
+html[data-theme="dark"] .al-info-popover,
+html[data-theme="dark"] .al-stat-tooltip{background:#253e57;color:#eef5fc}
+/* Aktuellt: background sections, registration, events */
+html[data-theme="dark"] :is(
+ .events-hero,.events-v326-alt,.events-v326-section,.al-news-meetings,
+ .al-news-original-copy,.events-section,.events-page .shell
+){background-color:transparent!important}
+html[data-theme="dark"] :is(
+ .events-card,.events-side,.events-form-card,.events-v326-card,
+ .al-news-register .events-form-card,.al-news-meeting,.al-news-meeting-foot,
+ .al-news-document .events-v326-pdf,.events-letter-preview
+){background:var(--al-panel)!important;border-color:var(--al-border)!important;color:var(--al-text)!important}
+html[data-theme="dark"] :is(.al-news-meeting h3,.al-news-meeting strong,.al-news-meeting-foot span){color:var(--al-text)}
+html[data-theme="dark"] :is(.al-news-meeting p,.al-news-meeting-foot p){color:var(--al-muted)}
+html[data-theme="dark"] .al-news-meeting-icon{background:#2a4965;color:#b7e1ff}
+html[data-theme="dark"] :is(.events-hero,.al-news-meetings){background-image:none!important;background:#101c2c!important}
+/* How it works, forms, steps */
+html[data-theme="dark"] :is(
+ .five-steps-section,.roles-section,.roles-provider-strip,.invest-trust,
+ .invest-funding,.invest-final,.invest-exit,.invest-faq,.invest-process,
+ .guide-main,.guide-hero,.guide-faq
+){background:#101c2c!important;color:var(--al-text)!important}
+html[data-theme="dark"] :is(
+ .roles-card,.roles-provider,.invest-card,.invest-step,.invest-faq details,
+ .invest-funding-card,.invest-exit-card,.al-open-step,.al-open-contact-panel,
+ .al-contact-form-card,.al-contact-channel,.al-contact-details,
+ .al-contact-grid .al-contact-form-card,.guide-overview,
+ .al-webinar-panel,.al-traf-form,.al-meeting-form
+){background:var(--al-panel)!important;border-color:var(--al-border)!important;color:var(--al-text)!important}
+html[data-theme="dark"] :is(.five-steps-list,.five-steps-list li,.roles-card,.invest-faq details){border-color:var(--al-border)!important}
+html[data-theme="dark"] :is(.five-steps-list aside,.invest-note,.invest-faq summary){background:#243e58;color:var(--al-text)}
+html[data-theme="dark"] :is(.al-open-hero,.al-contact-hero){background:#14283d!important}
+html[data-theme="dark"] :is(.al-contact-channel strong,.al-contact-form-card h2,.al-open-step h2){color:var(--al-text)!important}
+html[data-theme="dark"] :is(.al-contact-channel a,.al-contact-whatsapp){color:#b4e4ff}
+html[data-theme="dark"] :is(
+ input:not([type="checkbox"]):not([type="radio"]),textarea,select
+){background:#13273d!important;color:#f1f7fd!important;border-color:#49627d!important}
+html[data-theme="dark"] :is(input,textarea)::placeholder{color:#a9bacb}
+html[data-theme="dark"] :is(.al-contact-consent,.al-open-consent,.events-consent){color:var(--al-muted)}
+/* About and policy pages */
+html[data-theme="dark"] :is(
+ .hero,.principles,.arkad,.band,.disclosure,.al-policy-main,.legal-page main,
+ .al-policy-main section,.legal-page section
+){background-color:transparent!important}
+html[data-theme="dark"] :is(
+ .al-policy-main section,.legal-page main section,.principle,.principles article,
+ .arkad article,.disclosure article
+){border-color:var(--al-border)!important}
+html[data-theme="dark"] :is(.al-policy-main,.legal-page main) :is(h1,h2,h3){color:var(--al-text)!important}
+html[data-theme="dark"] :is(.al-policy-main,.legal-page main) :is(p,li){color:var(--al-muted)!important}
+/* Footer */
+html[data-theme="dark"] :is(.al-footer,.site-footer,footer){border-color:var(--al-border)}
+/* Keep light brand imagery and embedded external PDFs legible */
+html[data-theme="dark"] iframe{color-scheme:light}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
