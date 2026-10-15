@@ -1,1 +1,9 @@
 #al-navigation .al-nav-dropdown{position:relative;display:inline-flex;align-items:center;gap:0}#al-navigation .al-nav-dropdown>a{white-space:nowrap}.al-dropdown-toggle{border:0;background:transparent;color:inherit;cursor:pointer;padding:6px;font:inherit}.al-dropdown-menu{display:none;position:absolute;top:100%;left:0;min-width:185px;background:#fff;border:1px solid #d8e3ef;border-radius:9px;box-shadow:0 12px 30px #112b4a22;padding:8px;z-index:120}.al-nav-dropdown:hover .al-dropdown-menu,.al-nav-dropdown:focus-within .al-dropdown-menu,.al-nav-dropdown.is-open .al-dropdown-menu{display:block}#al-navigation .al-dropdown-menu a{display:block;padding:11px 12px;white-space:nowrap;color:#173454;text-decoration:none;font-size:13px;border-radius:6px}#al-navigation .al-dropdown-menu a:hover{background:#eef4fa}body.dark .al-dropdown-menu{background:#172b43;border-color:#38536b}body.dark #al-navigation .al-dropdown-menu a{color:#fff}@media(max-width:760px){#al-navigation .al-nav-dropdown{display:flex;width:100%;flex-wrap:wrap;justify-content:space-between}.al-dropdown-menu{position:static;flex-basis:100%;width:100%;box-shadow:none}.al-nav-dropdown:not(.is-open) .al-dropdown-menu{display:none}}
+/* 3.93: Remove the six-pixel hover gap that closes Aktuellt before a menu item can be reached. */
+@media (min-width:761px){
+  #al-navigation .al-nav-dropdown .al-dropdown-menu{top:100%!important;left:0!important;z-index:600!important;}
+  #al-navigation .al-nav-dropdown .al-dropdown-menu::before{content:"";position:absolute;left:0;right:0;top:-10px;height:10px;background:transparent;}
+  #al-navigation .al-nav-dropdown:hover .al-dropdown-menu,
+  #al-navigation .al-nav-dropdown:focus-within .al-dropdown-menu,
+  #al-navigation .al-nav-dropdown.is-open .al-dropdown-menu{display:block!important;}
+}

@@ -34,3 +34,12 @@ body.dark .al-header .al-navigation>a{border-color:#304861}
 .al-header .al-controls{gap:5px!important}
 .al-header .al-theme,.al-header .al-mobile{padding:8px!important}
 }
+
+/* 3.93: Remove the six-pixel hover gap that closes Aktuellt before a menu item can be reached. */
+@media (min-width:761px){
+  #al-navigation .al-nav-dropdown .al-dropdown-menu{top:100%!important;left:0!important;z-index:600!important;}
+  #al-navigation .al-nav-dropdown .al-dropdown-menu::before{content:"";position:absolute;left:0;right:0;top:-10px;height:10px;background:transparent;}
+  #al-navigation .al-nav-dropdown:hover .al-dropdown-menu,
+  #al-navigation .al-nav-dropdown:focus-within .al-dropdown-menu,
+  #al-navigation .al-nav-dropdown.is-open .al-dropdown-menu{display:block!important;}
+}

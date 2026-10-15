@@ -43,3 +43,12 @@ body > .site-language{display:none!important}
 .al-header .al-navigation{margin:0!important}
 @media(max-width:1199px){.al-header .al-brand{min-width:184px!important}}
 @media(max-width:540px){.al-header .al-brand{min-width:158px!important}.al-header .al-controls{min-width:0!important}}
+
+/* 3.93: Remove the six-pixel hover gap that closes Aktuellt before a menu item can be reached. */
+@media (min-width:761px){
+  #al-navigation .al-nav-dropdown .al-dropdown-menu{top:100%!important;left:0!important;z-index:600!important;}
+  #al-navigation .al-nav-dropdown .al-dropdown-menu::before{content:"";position:absolute;left:0;right:0;top:-10px;height:10px;background:transparent;}
+  #al-navigation .al-nav-dropdown:hover .al-dropdown-menu,
+  #al-navigation .al-nav-dropdown:focus-within .al-dropdown-menu,
+  #al-navigation .al-nav-dropdown.is-open .al-dropdown-menu{display:block!important;}
+}
