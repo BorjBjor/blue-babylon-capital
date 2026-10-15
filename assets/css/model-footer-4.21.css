@@ -1,0 +1,18 @@
+/* AlgoLodge 4.21: descriptive model content and cross-navigation */
+.al-account-note{font-size:12px!important;color:#647e94!important;line-height:1.65;margin:14px 0 0}
+.al-related-models{margin:24px 0 54px;padding:24px 26px;border:1px solid #dbe6ef;border-radius:17px;background:linear-gradient(115deg,#f5f9fc,#fff)}
+.al-related-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:19px}
+.al-related-heading h2{font:500 25px/1.3 Georgia,serif;color:#183754;margin:0}
+.al-related-heading>a{font-size:12px;font-weight:700;color:#17669c;text-decoration:none}
+.al-related-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.al-related-link{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;background:#fff;border:1px solid #dce6ee;border-radius:10px;padding:15px 13px;color:#23435e;text-decoration:none;transition:transform .2s,box-shadow .2s,border-color .2s}
+.al-related-link strong{font:700 12px/1.4 Inter,system-ui,sans-serif;overflow-wrap:anywhere}
+.al-related-link span{color:#b58a55;font-size:18px}
+.al-related-link:hover{transform:translateY(-2px);border-color:#9fbfd6;box-shadow:0 8px 20px #123a5a12}
+body.dark .al-related-models{background:#1b3047;border-color:#3b536c}
+body.dark .al-related-heading h2{color:#edf6ff}
+body.dark .al-related-link{background:#223a53;border-color:#425b74;color:#edf6ff}
+body.dark .al-account-note{color:#b8cadb!important}
+@media(max-width:1050px){.al-related-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:600px){.al-related-models{padding:20px 17px}.al-related-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){.al-related-link{transition:none}}
