@@ -1,0 +1,23 @@
+/* AlgoLodge 4.43 – refined page structure, philosophy, Cervantes quotation */
+.al-cervantes-section{padding:12px 0 54px;background:#fff}
+.al-cervantes-panel{display:grid;grid-template-columns:185px minmax(0,1fr);align-items:center;gap:28px;max-width:1040px;margin:0 auto;padding:29px 40px;background:linear-gradient(115deg,#edf4f8,#f9fbfd);border:1px solid #dce7ed;border-left:4px solid #b9925b;border-radius:14px}
+.al-cervantes-illustration{width:155px;height:140px;display:grid;place-items:center}
+.al-cervantes-illustration svg{width:100%;height:100%}
+.al-cervantes-eyebrow{display:block;color:#a67e4e;font:800 10px/1.5 Inter,Arial,sans-serif;letter-spacing:.14em;margin-bottom:11px}
+.al-cervantes-copy blockquote{font:italic 500 clamp(23px,2.9vw,35px)/1.35 Georgia,serif;color:#1b3b56;margin:0 0 12px;padding:0;border:0}
+.al-cervantes-credit{font:400 12px/1.5 Inter,Arial,sans-serif;color:#6d8193;margin:0 0 13px}
+.al-cervantes-explain{font:400 14px/1.7 Inter,Arial,sans-serif;color:#536e83;margin:0;max-width:730px}
+.al-philosophy-section{padding:68px 0 77px;background:linear-gradient(180deg,#f5f9fc,#eef5fa)}
+.al-philosophy-section h2{font:500 clamp(30px,3.3vw,43px)/1.2 Georgia,serif;color:#183753;margin:0 0 12px}
+.al-philosophy-lead{font:400 15px/1.75 Inter,Arial,sans-serif;color:#5e778c;max-width:670px;margin:0 0 29px}
+.al-philosophy-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.al-philosophy-card{position:relative;min-height:240px;padding:31px 28px 30px;background:#fff;border:1px solid #dce6ee;border-radius:16px;box-shadow:0 12px 30px rgba(20,61,94,.045);overflow:hidden}
+.al-philosophy-card:before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:#b9925b}
+.al-philosophy-card:nth-child(2):before{background:#1a79ac}
+.al-philosophy-card:nth-child(3):before{background:#5c9aa5}
+.al-philosophy-number{display:inline-grid;place-items:center;width:48px;height:48px;border-radius:14px;background:#eef5fa;color:#1c6b9c;font:600 18px Georgia,serif}
+.al-philosophy-card h3{font:500 25px/1.25 Georgia,serif;color:#183a56;margin:21px 0 11px}
+.al-philosophy-card p{font:400 14px/1.75 Inter,Arial,sans-serif;color:#60798d;margin:0}
+.why-section.why-tint + .why-section.why-tint{background:#fff}
+@media(max-width:800px){.al-cervantes-panel{grid-template-columns:120px minmax(0,1fr);padding:25px;gap:16px}.al-cervantes-illustration{width:110px;height:115px}.al-philosophy-grid{grid-template-columns:1fr}.al-philosophy-card{min-height:0}}
+@media(max-width:560px){.al-cervantes-section{padding-bottom:35px}.al-cervantes-panel{grid-template-columns:1fr;padding:24px}.al-cervantes-illustration{width:90px;height:85px}.al-cervantes-copy blockquote{font-size:25px}.al-philosophy-section{padding:45px 0 55px}}
