@@ -1,0 +1,12 @@
+/* AlgoLodge 4.61: shared dropdown and footer refinements */
+.al-footer-contact address{font-style:normal;line-height:1.8;max-width:310px}
+.al-why-dropdown{position:relative}
+.al-why-dropdown .al-dropdown-menu{z-index:150}
+.al-why-dropdown:hover .al-dropdown-menu,.al-why-dropdown:focus-within .al-dropdown-menu{visibility:visible;opacity:1;pointer-events:auto}
+/* Keep the same hover gap as the existing Aktuellt menu. */
+.al-why-dropdown::after{content:'';position:absolute;top:100%;left:0;right:0;height:12px}
+#modellguide{scroll-margin-top:95px}
+#modellguide .mg-wrap{max-width:1180px}
+.mg-link-to-why{text-align:center;margin:20px auto 60px}
+.mg-link-to-why a{color:#17699f;font-weight:700}
+@media(max-width:780px){.al-why-dropdown::after{display:none}}
