@@ -1,0 +1,7 @@
+/* Editorial highlight for opportunity capital */
+.why-opportunity-callout{display:grid;grid-template-columns:46px minmax(0,1fr);gap:17px;margin:28px 0 4px;padding:27px 29px;background:linear-gradient(125deg,#f0f6fb,#f8fafc);border:1px solid #dbe7ef;border-left:4px solid #b99461;border-radius:12px}
+.why-opportunity-accent{display:grid;place-items:center;width:40px;height:40px;background:#e0edf7;color:#216d9c;border-radius:12px;font:500 27px Georgia,serif}
+.why-opportunity-content h3{font:500 clamp(22px,2.5vw,29px)/1.25 Georgia,serif;color:#1a3b58;margin:0 0 14px}
+.why-editorial-copy .why-opportunity-content p{font:400 15px/1.8 Inter,Arial,sans-serif;color:#526d83;margin:0 0 13px;max-width:none}
+.why-editorial-copy .why-opportunity-content p:last-child{margin-bottom:0}
+@media(max-width:600px){.why-opportunity-callout{grid-template-columns:1fr;padding:22px;gap:12px}}
