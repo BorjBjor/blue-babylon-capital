@@ -1,0 +1,10 @@
+/* Portföljförsäkring: a calm editorial section between correlation and philosophy. */
+.al-insurance-section{padding:38px 0 62px;background:#fff}
+.al-insurance-panel{max-width:1040px;margin:0 auto;padding:36px 42px;display:grid;grid-template-columns:76px minmax(0,1fr);gap:26px;align-items:start;border:1px solid #dce7ef;border-radius:17px;background:linear-gradient(115deg,#f3f8fc,#fff);box-shadow:0 12px 30px rgba(25,64,93,.045)}
+.al-insurance-emblem{width:68px;height:68px;display:grid;place-items:center;border-radius:18px;background:#e4f0f7;color:#286c96}
+.al-insurance-emblem svg{width:40px;height:40px}
+.al-insurance-kicker{font:750 10px/1.4 Inter,Arial,sans-serif;letter-spacing:.13em;color:#aa8253;margin:0 0 10px}
+.al-insurance-content h2{font:500 clamp(29px,3.1vw,40px)/1.2 Georgia,serif;color:#173a56;margin:0 0 17px}
+.al-insurance-content p:not(.al-insurance-kicker){font:400 15px/1.8 Inter,Arial,sans-serif;color:#546f84;margin:0 0 15px;max-width:760px}
+.al-insurance-content p:last-child{margin-bottom:0}
+@media(max-width:640px){.al-insurance-section{padding:25px 0 40px}.al-insurance-panel{grid-template-columns:1fr;gap:18px;padding:26px 22px}.al-insurance-emblem{width:55px;height:55px}.al-insurance-emblem svg{width:33px;height:33px}}
