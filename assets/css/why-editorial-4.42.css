@@ -1,0 +1,23 @@
+/* AlgoLodge – editorial opening for Why AlgoLodge */
+.why-hero-editorial{padding:64px 0 76px!important;background:linear-gradient(180deg,#f5f9fc 0%,#fff 32%,#fff 100%)!important}
+.why-editorial-header{max-width:940px;margin:0 auto 47px;text-align:center}
+.why-editorial-header h1{font:500 clamp(37px,4.5vw,64px)/1.13 Georgia,serif;color:#173552;letter-spacing:-.035em;margin:16px 0 23px}
+.why-editorial-header h1 em{color:#3176a2;font-style:normal}
+.why-editorial-deck{max-width:740px;margin:0 auto!important;color:#425f79!important;font-size:clamp(18px,1.9vw,23px)!important;line-height:1.55!important;font-weight:400}
+.why-editorial-content{max-width:950px;margin:0 auto}
+.why-editorial-chapter{display:grid;grid-template-columns:160px minmax(0,1fr);gap:40px;padding:36px 0;border-top:1px solid #e2eaf0}
+.why-editorial-marker{padding-top:8px;color:#b68c55;font:600 25px/1 Georgia,serif;white-space:nowrap}
+.why-editorial-marker span{display:block;font:750 10px/1.5 Inter,Arial,sans-serif;letter-spacing:.12em;margin-top:13px;white-space:normal}
+.why-editorial-copy h2{font:500 clamp(27px,3vw,36px)/1.2 Georgia,serif;color:#193754;margin:0 0 18px}
+.why-editorial-copy p{font:400 16px/1.85 Inter,Arial,sans-serif;color:#506a80;margin:0 0 18px;max-width:720px}
+.why-editorial-copy p:last-child{margin-bottom:0}
+.why-editorial-insight{margin:8px 0 35px 200px;background:#edf5fb;border-radius:0 13px 13px 0;padding:25px 29px 25px 32px;position:relative}
+.why-editorial-insight-line{position:absolute;left:0;top:0;bottom:0;width:4px;background:#b9935c}
+.why-editorial-insight p{font:500 clamp(19px,2.1vw,24px)/1.55 Georgia,serif;color:#1a4160;margin:0}
+.why-editorial-insight strong{color:#1769a0;font-weight:600}
+.why-editorial-conclusion{margin:23px 0 0 200px;padding:30px 35px;background:#193c5a;color:#fff;border-radius:15px}
+.why-editorial-conclusion span{font:750 10px/1.4 Inter,Arial,sans-serif;letter-spacing:.15em;color:#e0bc85}
+.why-editorial-conclusion p{font:500 clamp(21px,2.5vw,29px)/1.45 Georgia,serif;color:#fff;margin:14px 0}
+.why-editorial-conclusion small{font:400 14px/1.6 Inter,Arial,sans-serif;color:#c7d9e6}
+@media(max-width:800px){.why-hero-editorial{padding:44px 0 55px!important}.why-editorial-chapter{grid-template-columns:1fr;gap:12px;padding:29px 0}.why-editorial-marker{font-size:18px}.why-editorial-marker span{display:inline;margin-left:10px}.why-editorial-insight,.why-editorial-conclusion{margin-left:0}}
+@media(max-width:480px){.why-editorial-header{text-align:left;margin-bottom:32px}.why-editorial-deck{font-size:18px!important}.why-editorial-copy p{font-size:15px;line-height:1.75}.why-editorial-insight{padding:22px 22px 22px 25px}.why-editorial-conclusion{padding:25px}}
