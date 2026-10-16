@@ -1,0 +1,8 @@
+/* Portrait refinements for AlgoLodge About */
+.about25-identity{padding:0 0 27px;justify-content:flex-start;align-items:stretch;min-height:0;overflow:hidden}
+.about25-portrait{display:block;width:100%;height:auto;aspect-ratio:570 / 665;object-fit:cover;object-position:center 35%;margin:0 0 24px}
+.about25-identity>span,.about25-identity>h3,.about25-identity>p{margin-left:25px;margin-right:25px}
+.about25-identity>span{display:block}
+.about25-identity>h3{margin-top:10px;margin-bottom:0}
+.about25-manager-card{align-items:stretch}
+@media(max-width:650px){.about25-identity{padding:0 0 24px}.about25-portrait{max-height:400px;object-fit:cover;object-position:center 30%}}
