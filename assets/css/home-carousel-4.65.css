@@ -1,0 +1,32 @@
+/* AlgoLodge 4.65 – understated, compact performance band on homepage */
+#strategy-carousel .carousel-stats{
+ display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+ gap:0!important;background:#fff!important;border:1px solid #dce7ef!important;
+ border-radius:12px!important;overflow:hidden!important;width:100%;
+}
+#strategy-carousel .carousel-stat{
+ display:flex!important;flex-direction:column!important;justify-content:center!important;
+ min-width:0!important;background:transparent!important;border:0!important;
+ border-radius:0!important;box-shadow:none!important;padding:13px 15px!important;
+}
+#strategy-carousel .carousel-stat + .carousel-stat{border-left:1px solid #dce7ef!important}
+#strategy-carousel .carousel-stat span{
+ display:block!important;white-space:normal!important;font-size:11px!important;
+ line-height:1.35!important;letter-spacing:.01em!important;color:#627c91!important;
+ margin:0 0 6px!important;font-weight:500!important;
+}
+#strategy-carousel .carousel-stat strong{
+ display:block!important;font-size:clamp(17px,1.6vw,23px)!important;
+ line-height:1.2!important;font-weight:750!important;font-variant-numeric:tabular-nums!important;
+ letter-spacing:-.025em!important;margin:0!important;
+}
+#strategy-carousel .carousel-bottom{gap:12px!important;align-items:stretch!important}
+#strategy-carousel .carousel-readmore{flex:none;align-self:center}
+@media(max-width:700px){
+ #strategy-carousel .carousel-bottom{flex-direction:column!important}
+ #strategy-carousel .carousel-stats{width:100%!important}
+ #strategy-carousel .carousel-stat{padding:11px 10px!important}
+ #strategy-carousel .carousel-stat span{font-size:10px!important}
+ #strategy-carousel .carousel-stat strong{font-size:17px!important}
+ #strategy-carousel .carousel-readmore{align-self:stretch!important}
+}
