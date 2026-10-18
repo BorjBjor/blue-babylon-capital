@@ -93,3 +93,69 @@ body.dark .cmp-axis{fill:#b0c0cd}
 .cmp-entry-cta{color:#16344e!important;background:#fff;padding:14px 20px;border-radius:8px;text-align:center;text-decoration:none;white-space:nowrap;font:700 14px Inter,Arial,sans-serif}
 .cmp-entry-cta:hover{background:#f3e8d4}
 @media(max-width:720px){.cmp-entry{flex-direction:column;align-items:flex-start;padding:23px}.cmp-entry-cta{width:100%}}
+
+/* Version 2: portföljgrafen och modellvalen i samma överblick. */
+.cmp-hero{padding-top:35px;padding-bottom:62px}
+.cmp-hero h1{font-size:clamp(35px,4vw,51px);margin-bottom:10px}
+.cmp-hero p:not(.cmp-kicker){font-size:15px;line-height:1.55}
+.cmp-kicker{margin-bottom:10px}
+.cmp-breadcrumb{margin-bottom:13px}
+.cmp-workspace{display:grid;grid-template-columns:minmax(300px,350px) minmax(0,1fr);gap:18px;align-items:start;margin-bottom:22px}
+.cmp-workspace > .cmp-panel,.cmp-workspace > .cmp-chart-card{margin-bottom:0;min-width:0}
+.cmp-workspace .cmp-select-panel{padding:22px 20px;border-top:3px solid #b18b52}
+.cmp-select-panel .cmp-panel-head{align-items:center;margin-bottom:10px;gap:8px}
+.cmp-select-panel h2{font-size:25px;margin-bottom:5px}
+.cmp-select-panel .cmp-sub{font-size:12px;line-height:1.45}
+.cmp-select-panel .cmp-text-button{font-size:11px;padding:8px 10px}
+.cmp-select-panel .cmp-choice-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:14px}
+.cmp-select-panel .cmp-choice{min-width:0;min-height:47px;font-size:12px;gap:7px;padding:7px 9px;border-radius:9px}
+.cmp-select-panel .cmp-choice input{width:15px;height:15px}
+.cmp-select-panel .cmp-color{width:4px;height:18px}
+.cmp-select-panel .cmp-choice-check{display:none}
+.cmp-select-panel .cmp-choice-text{min-width:0;overflow-wrap:break-word}
+.cmp-select-panel .cmp-options{display:grid;grid-template-columns:1fr;gap:13px;margin-top:17px;padding-top:15px}
+.cmp-select-panel .cmp-field{min-width:0;width:100%;gap:6px}
+.cmp-select-panel .cmp-field label{font-size:11px}
+.cmp-select-panel .cmp-field select{width:100%;min-height:41px;padding:9px 31px 9px 11px;font-size:12px}
+.cmp-select-panel .cmp-time{font-size:12px;line-height:1.45;margin-top:15px}
+.cmp-feature-chart{padding:0 24px 20px;border:1px solid #cbdde9;box-shadow:0 13px 35px rgba(20,52,77,.10)}
+.cmp-feature-topline{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:20px 0 15px;border-bottom:1px solid #e4ebef}
+.cmp-feature-eyebrow{color:#98763f;font-size:11px;font-weight:800;letter-spacing:.14em}
+.cmp-weight-summary{color:#385d78;background:#edf4f7;padding:7px 11px;border-radius:999px;font-weight:700;font-size:12px}
+.cmp-feature-heading{padding-top:17px;align-items:center;gap:16px}
+.cmp-feature-heading h2{font-size:clamp(25px,2.8vw,33px);margin-bottom:5px}
+.cmp-feature-heading p{max-width:480px}
+.cmp-main-return{display:flex;flex-direction:column;align-items:flex-end;gap:3px;min-width:128px}
+.cmp-main-return span{font-size:11px;color:#6c8293;font-weight:700}
+.cmp-main-return strong{font:500 clamp(23px,2.3vw,32px) Georgia,serif;color:#184b69;white-space:nowrap}
+.cmp-feature-chart .cmp-legend{margin:14px 0 2px}
+.cmp-feature-chart .cmp-chart{margin-top:0}
+body.dark .cmp-feature-chart{border-color:#607a8c}
+body.dark .cmp-feature-topline{border-color:#425a6e}
+body.dark .cmp-weight-summary{background:#28475d;color:#d5e7f3}
+body.dark .cmp-feature-eyebrow{color:#ddc28b}
+body.dark .cmp-main-return strong{color:#eaf4fa}
+@media(max-width:1060px){
+ .cmp-workspace{grid-template-columns:minmax(275px,305px) minmax(0,1fr);gap:13px}
+ .cmp-workspace .cmp-select-panel{padding:18px 14px}
+ .cmp-feature-chart{padding-left:14px;padding-right:14px}
+ .cmp-feature-heading{align-items:flex-start}
+}
+@media(max-width:850px){
+ .cmp-workspace{grid-template-columns:1fr}
+ .cmp-select-panel .cmp-choice-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .cmp-select-panel .cmp-options{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .cmp-select-panel .cmp-field{width:100%}
+ .cmp-feature-chart{padding:0 20px 16px}
+}
+@media(max-width:560px){
+ .cmp-hero{padding:33px 0 52px}
+ .cmp-select-panel .cmp-choice-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .cmp-select-panel .cmp-options{grid-template-columns:1fr}
+ .cmp-feature-chart{padding:0 13px 17px}
+ .cmp-feature-topline{padding:15px 0 11px}
+ .cmp-feature-heading{gap:9px}
+ .cmp-feature-heading h2{font-size:25px}
+ .cmp-main-return{align-items:flex-start}
+ .cmp-feature-heading{flex-direction:column}
+}

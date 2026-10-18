@@ -18,6 +18,8 @@
   const kpis = root.querySelector('#compare-kpis');
   const modelPlot = root.querySelector('#compare-model-chart');
   const combinedPlot = root.querySelector('#compare-combined-chart');
+  const weightSummary = root.querySelector('#compare-weight-summary');
+  const mainReturn = root.querySelector('#compare-main-return');
   const modelLegend = root.querySelector('#compare-model-legend');
   const combinedLegend = root.querySelector('#compare-combined-legend');
   const statTable = root.querySelector('#compare-stat-table');
@@ -172,6 +174,8 @@
     const stats=Object.fromEntries(keys.map(k=>[k,makeStats(returns[k])]));
     const combinedReturns=makePortfolio(keys,dates,rebalance.value);
     const combinedStats=makeStats(combinedReturns);
+    weightSummary.textContent=`${keys.length} ${keys.length===1?'modell':'modeller'} · ${fmtPct(1/keys.length,keys.length===3||keys.length===6?1:0)} per modell vid start`;
+    mainReturn.textContent=fmtPct(combinedStats.total);
     const combinedSeries={key:'portfolio',label:keys.length>1?'Kombinerad portfölj':dataset.models[keys[0]].label,values:combinedStats.values,color:palette.portfolio};
     const modelSeries=keys.map(k=>({key:k,label:dataset.models[k].label,values:stats[k].values,color:palette[k]}));
     timeInfo.textContent=`${keys.length} ${keys.length===1?'modell':'modeller'} · ${dates.length} avkastningsmånader · ${fmtMonth(from)} – ${fmtMonth(to)}`;
