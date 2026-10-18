@@ -23,8 +23,5 @@ function applyTheme(d){
 }
 applyTheme(localStorage.getItem('algolodge-theme')==='dark');
 if(theme)theme.addEventListener('click',()=>applyTheme(!document.body.classList.contains('dark')));
-const menu=document.getElementById('menu');
-if(menu)menu.addEventListener('click',()=>{
- const nav=document.getElementById('nav');nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(nav.classList.contains('open')));
-});
+// Shared header menu is handled by header-3.75.js on all pages.
 const year=document.getElementById('year');if(year)year.textContent=new Date().getFullYear();
