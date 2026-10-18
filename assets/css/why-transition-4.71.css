@@ -1,0 +1,12 @@
+/* 4.71: sammanhängande övergång mellan inledningen och Grundprincipen. */
+/* Behåll samma läsbredd och vänsterkant i båda avsnitten. */
+.why-hero-editorial .why-wrap,
+.why-hero-editorial + .why-section > .why-wrap{max-width:1100px!important;margin-inline:auto!important;box-sizing:border-box}
+/* Avlägsna den visuella luckan och skapa en sammanhängande bakgrund. */
+.why-hero-editorial{padding-bottom:34px!important;background:linear-gradient(180deg,#f5f9fc 0%,#fff 25%,#fff 100%)!important}
+.why-hero-editorial + .why-section{padding-top:38px!important;padding-bottom:55px!important;background:#fff!important}
+.why-hero-editorial + .why-section .why-eyebrow{margin-top:0!important}
+/* Den avslutande mörkblå textrutan ska höra till inledningen utan stor tom yta. */
+.why-editorial-conclusion{margin-bottom:0!important}
+/* Små skärmar får samma konsekventa sidmarginal. */
+@media(max-width:760px){.why-hero-editorial{padding-bottom:22px!important}.why-hero-editorial + .why-section{padding-top:28px!important;padding-bottom:42px!important}}
