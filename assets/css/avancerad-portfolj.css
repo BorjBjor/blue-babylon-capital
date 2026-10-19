@@ -88,3 +88,11 @@ body.dark .adv-model-custom-body,body.dark .adv-model-weights-bottom{border-colo
 body.dark .adv-model-weight{background:#233e55;border-color:#47617a}
 body.dark .adv-model-weight-head label,body.dark .adv-model-weight-head output,body.dark .adv-model-weights-bottom span{color:#e6f3fc}
 @media(max-width:680px){.adv-model-custom-title small{font-size:10px}.adv-model-weight{padding:9px 10px}}
+
+/* Slutlig layoutputsning: tydliga förinställningsknappar. */
+.adv-presets button{appearance:none;min-height:35px;padding:8px 11px;border:1px solid #cfdfeb;border-radius:9px;background:#f5f9fc;color:#245679;font:700 12px/1.35 Inter,Arial,sans-serif;cursor:pointer;transition:background .16s ease,border-color .16s ease,box-shadow .16s ease}
+.adv-presets button:hover{background:#eaf3fa;border-color:#9ebbd0}
+.adv-presets button:focus-visible{outline:2px solid #6a9dc3;outline-offset:2px}
+.adv-presets button.active{background:#1d5b86;border-color:#1d5b86;color:#fff;box-shadow:0 3px 9px rgba(30,85,128,.12)}
+body.dark .adv-presets button:not(.active){background:#24455e;border-color:#46667f;color:#eff6fa}
+@media(max-width:680px){.adv-presets{gap:7px}.adv-presets button{flex:0 1 auto;min-height:37px}}

@@ -53,3 +53,6 @@
 @media(max-width:1000px){.home60-split{gap:30px}.home60-models{grid-template-columns:repeat(2,minmax(0,1fr))}.home60-founder-grid{gap:30px}}
 @media(max-width:760px){.home60-section{padding:48px 0}.home60-split{grid-template-columns:1fr}.home60-models{grid-template-columns:1fr}.home60-heading{display:block}.home60-founder-grid{grid-template-columns:130px minmax(0,1fr);gap:18px;align-items:start}.home60-last-grid{flex-direction:column;align-items:flex-start}.home60-hero{padding-top:38px}.home60-quote{padding:27px}}
 @media(max-width:470px){.home60-founder-grid{grid-template-columns:1fr}.home60-founder-grid img{max-width:190px}.home60-hero .hero-copy h1{font-size:39px}.home60-models a{min-height:125px}}
+
+/* Förhindra att karusellens sidoknappar ger horisontell scrollning. */
+.home60-hero{overflow-x:clip}
