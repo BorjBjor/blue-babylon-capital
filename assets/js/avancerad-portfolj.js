@@ -92,7 +92,7 @@ if(low===high){low=0;high=200}
 const X=i=>left+i*(vbW-left-right)/Math.max(1,dates.length-1);
 const Y=v=>top+(high-v)*(vbH-top-bottom)/(high-low);
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
-let svg=`<svg viewBox="0 0 ${vbW} ${vbH}" role="img" aria-label="Historisk totalavkastning inklusive återinvesterade ETF-utdelningar och hypotetisk portfölj. ETF-serierna visas från december 2018, när hela perioden väljs.">`;
+let svg=`<svg viewBox="0 0 ${vbW} ${vbH}" role="img" aria-label="Historisk totalavkastning inklusive återinvesterade ETF-utdelningar och hypotetisk portfölj. Alla kurvor startar vid index 100 på jämförelsens startdatum.">`;
 for(let i=0;i<5;i++){
  const v=low+(high-low)*i/4,y=Y(v);
  svg+=`<line x1="${left}" x2="${vbW-right}" y1="${y}" y2="${y}" stroke="#e7edf2"/><text x="${left-10}" y="${y+4}" text-anchor="end" fill="#6d879a" font-size="12">${Math.round(v)}</text>`;
@@ -134,7 +134,7 @@ const {keys,by}=result;
 const mode=$('adv-rebalance').value;
 const data=combine(keys,by,{...weights},mode),s=stats(data.months);
 const baseDate=prevMonth(keys[0]);
-const startDate=$('adv-period').value==='all'?'2018-12':baseDate;
+const startDate=baseDate;
 const dates=monthRange(startDate,keys.at(-1));
 const portfolioDates=[baseDate,...keys];
 const portfolioMap=new Map(portfolioDates.map((d,i)=>[d,data.values[i]]));
@@ -144,10 +144,8 @@ for(const [key,name] of [['stocks','Aktier – S&P 500'],['bonds','Obligationer 
 }
 const modelDates=modelDateInfo();
 if(selected.size && modelDates.firstRolling){
- // Extend the AlgoLodge-only line to the earliest available model; do not
- // backfill models that had not yet started. Earlier part is shown dashed.
  lines.push({key:'algo',name:'Valda AlgoLodge-modeller',color:colors.algo,
-  values:chartValues(modelDates.rolling,dates,baseDate),dashedBefore:modelDates.firstCommon});
+  values:chartValues(modelDates.rolling,dates,baseDate)});
 }
 let benchmark=null;
 if(market.stocks&&market.bonds&&keys.every(m=>market.stocks.returns.has(m)&&market.bonds.returns.has(m))){
@@ -158,13 +156,13 @@ if(market.stocks&&market.bonds&&keys.every(m=>market.stocks.returns.has(m)&&mark
 }
 $('adv-return-label').textContent='Totalavkastning';
 updateLegend(lines);chart.innerHTML=drawChart(dates,lines,baseDate);ret.textContent=pct(s.total);
-summary.textContent=keys.length+' portföljmånader · '+keys[0]+'–'+keys.at(-1)+' · USD · '+(mode==='monthly'?'Månadsvis omviktning':'Utan omviktning')+' · ETF: inklusive återinvesterade utdelningar, före skatt';
+summary.textContent=keys.length+' portföljmånader · '+keys[0]+'–'+keys.at(-1)+' · USD · '+(mode==='monthly'?'Månadsvis omviktning':'Utan omviktning')+' · Alla kurvor startar vid 100 · ETF: inklusive återinvesterade utdelningar, före skatt';
 const historyNote=$('adv-model-history-note');
 if(historyNote){
  const begin=modelDates.firstRolling?prevMonth(modelDates.firstRolling):null;
  const common=modelDates.firstCommon;
- historyNote.textContent=begin&&common
-  ?`Modellernas kurva visas från ${begin} med de modeller som då hade startat (streckad linje). Alla markerade modeller finns med från ${common} (heldragen linje). Portföljens statistik använder samma start för alla markerade modeller.`
+ historyNote.textContent=common
+  ?`Alla kurvor indexeras till 100 vid jämförelsens start (${baseDate}). Om du ändrar modellval flyttas startdatumet automatiskt till den tidigaste månad där alla valda innehav kan jämföras på lika villkor.`
   :'Markera minst en modell för att visa modellhistoriken.';
 }
 const items=[['Totalavkastning',pct(s.total)],['Årlig avkastning (CAGR)',pct(s.cagr)],['Största nedgång',pct(s.dd)],['Volatilitet per år',pct(s.vol)],['Sharpekvot (ränta 0 %)',Number.isFinite(s.sharpe)?num(s.sharpe):'—'],['Positiva månader',pct(s.positive,0)]];
