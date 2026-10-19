@@ -30,3 +30,13 @@ body.dark .homecmp-copy>p:not(.homecmp-eyebrow){color:#d2e0eb}
 @media(max-width:950px){.homecmp-shell{grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);gap:19px;padding:21px}.homecmp-copy h2{font-size:30px}.homecmp-preview-head div:first-child strong{font-size:19px}.homecmp-preview-return strong{font-size:22px}}
 @media(max-width:720px){.homecmp-section{padding:15px 0 30px}.homecmp-shell{grid-template-columns:1fr;gap:19px;padding:22px}.homecmp-copy h2{max-width:480px;font-size:32px}.homecmp-copy>p:not(.homecmp-eyebrow){max-width:550px}.homecmp-preview{max-width:650px;width:100%}}
 @media(max-width:430px){.homecmp-shell{padding:18px;gap:16px}.homecmp-copy h2{font-size:28px}.homecmp-preview{padding:12px 10px 10px}.homecmp-preview-head div:first-child strong{font-size:17px}.homecmp-preview-return strong{font-size:20px}.homecmp-preview-head{gap:10px}.homecmp-preview-foot{font-size:10px}}
+
+/* Compact secondary entrance: wider portfolio comparison (primary model tool stays prominent). */
+.homecmp-advanced{display:flex;flex-direction:column;align-items:flex-start;gap:3px;border-top:1px solid #d9e5ed;margin-top:18px;padding-top:12px;max-width:400px}
+.homecmp-advanced>span{font:400 12px/1.55 Inter,Arial,sans-serif;color:#6b8192}
+.homecmp-advanced>a{display:inline-flex;align-items:center;gap:6px;font:700 13px/1.45 Inter,Arial,sans-serif;color:#205f8c!important;text-decoration:none!important}
+.homecmp-advanced>a:hover{text-decoration:underline!important;text-underline-offset:3px}
+.homecmp-advanced>a:focus-visible{outline:2px solid #3884be;outline-offset:3px;border-radius:2px}
+body.dark .homecmp-advanced{border-color:#395a70}
+body.dark .homecmp-advanced>span{color:#c4d5e0}
+body.dark .homecmp-advanced>a{color:#b1d9f4!important}
