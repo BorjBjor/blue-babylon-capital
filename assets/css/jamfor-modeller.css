@@ -209,3 +209,12 @@ body.dark .cmp-workspace .cmp-feature-chart .cmp-feature-note p{color:#ccdae5}
   .cmp-hero-actions{gap:8px}
   .cmp-hero-actions .cmp-guide-cta{padding:10px 13px;white-space:normal;text-align:center}
 }
+
+/* Individuell historik: förklarande val över de separata resultatkurvorna */
+.cmp-model-history-control{display:flex;flex-direction:column;gap:7px;min-width:225px;margin-left:auto}
+.cmp-model-history-control label{font-size:11px;line-height:1.4;color:#5b7488;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.cmp-model-history-control select{border:1px solid #cedee9;border-radius:8px;background:#fff;color:#214967;font-size:13px;padding:9px 12px;min-height:41px;cursor:pointer;max-width:100%}
+.cmp-model-history-control select:focus-visible{outline:2px solid #6b99be;outline-offset:2px}
+body.dark .cmp-model-history-control label{color:#bacddd}
+body.dark .cmp-model-history-control select{background:#223e56;border-color:#45627a;color:#e9f1f7}
+@media(max-width:650px){.cmp-model-history-control{margin-left:0;width:100%}.cmp-model-history-control select{width:100%}}

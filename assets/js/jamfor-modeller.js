@@ -17,6 +17,8 @@
   const timeInfo = root.querySelector('#compare-time');
   const kpis = root.querySelector('#compare-kpis');
   const modelPlot = root.querySelector('#compare-model-chart');
+  const modelHistory = root.querySelector('#compare-model-history');
+  const modelExplanation = root.querySelector('#compare-model-explanation');
   const combinedPlot = root.querySelector('#compare-combined-chart');
   const weightSummary = root.querySelector('#compare-weight-summary');
   const mainReturn = root.querySelector('#compare-main-return');
@@ -107,10 +109,10 @@
   function svgChart(host,series,dates,axisLabel) {
     const W=940,H=330, left=66,right=32,top=22,bottom=45;
     const w=W-left-right,h=H-top-bottom;
-    const all=series.flatMap(s=>s.values), rawMin=Math.min(100,...all),rawMax=Math.max(100,...all);
+    const all=series.flatMap(s=>s.values.filter(v=>Number.isFinite(v))), rawMin=Math.min(100,...all),rawMax=Math.max(100,...all);
     const span=Math.max(10,rawMax-rawMin), pad=span*.095;
     const min=Math.max(0,rawMin-pad),max=rawMax+pad;
-    const xp=i=>left+i*(w/(dates.length-1));
+    const xp=i=>left+i*(w/Math.max(1,dates.length-1));
     const yp=v=>top+h-(v-min)/(max-min)*h;
     const vertical=[];
     for(let i=0;i<=4;i++) {
@@ -126,7 +128,12 @@
     }
     if((dates.length-1)%tickInterval!==0) ticks.push(`<text x="${xp(dates.length-1)}" y="${H-16}" class="cmp-axis" text-anchor="end">${esc(fmtMonth(dates.at(-1)))}</text>`);
     const lines=series.map(s=>{
-      const d=s.values.map((v,i)=>`${i?'L':'M'}${xp(i).toFixed(2)},${yp(v).toFixed(2)}`).join(' ');
+      let drawing=false;
+      const d=s.values.map((v,i)=>{
+        if(!Number.isFinite(v)){drawing=false;return '';}
+        const command=drawing?'L':'M';drawing=true;
+        return `${command}${xp(i).toFixed(2)},${yp(v).toFixed(2)}`;
+      }).filter(Boolean).join(' ');
       return `<path d="${d}" fill="none" stroke="${s.color}" stroke-width="${s.key==='portfolio'?3.5:2.4}" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>`;
     }).join('');
     const baseY=yp(100);
@@ -146,7 +153,7 @@
       const idx=Math.max(0,Math.min(dates.length-1,Math.round((actualX-left)/w*(dates.length-1))));
       cursor.setAttribute('x1',xp(idx));cursor.setAttribute('x2',xp(idx));cursor.style.display='';
       const year=idx===0?fmtMonth(dates[0])+' (start)':fmtMonth(dates[idx]);
-      tooltip.innerHTML=`<strong>${esc(year)}</strong>`+series.map(s=>`<span><i style="background:${s.color}"></i>${esc(s.label)} <b>${fmtNumber(s.values[idx],1)}</b></span>`).join('');
+      tooltip.innerHTML=`<strong>${esc(year)}</strong>`+series.filter(s=>Number.isFinite(s.values[idx])).map(s=>`<span><i style="background:${s.color}"></i>${esc(s.label)} <b>${fmtNumber(s.values[idx],1)}</b></span>`).join('');
       tooltip.hidden=false;
       const parentRect=canvas.getBoundingClientRect();
       const leftPx=(xp(idx)/W)*rect.width+(rect.left-parentRect.left);
@@ -155,6 +162,27 @@
     }
     svg.addEventListener('pointermove',move);
     svg.addEventListener('pointerleave',()=>{tooltip.hidden=true;cursor.style.display='none';});
+  }
+
+  function fullModelHistory(keys) {
+    const first=keys.reduce((acc,k)=>acc<dataset.models[k].start?acc:dataset.models[k].start,'9999-99');
+    const last=keys.reduce((acc,k)=>acc>dataset.models[k].end?acc:dataset.models[k].end,'0000-00');
+    const months=[];
+    for(let d=first;d<=last;d=monthAfter(d))months.push(d);
+    const series=keys.map(k=>{
+      const model=dataset.models[k];
+      let value=100;
+      const values=months.map(date=>{
+        if(date<model.start||date>model.end)return null;
+        if(date===model.start)return 100;
+        const monthly=retMap[k].get(date);
+        if(!Number.isFinite(monthly))return null;
+        value*=1+monthly;
+        return value;
+      });
+      return {key:k,label:model.label,color:palette[k],values};
+    });
+    return {months,series};
   }
 
   const legend=(series)=>series.map(s=>`<span class="cmp-legend-item"><i style="background:${s.color}"></i>${esc(s.label)}</span>`).join('');
@@ -190,7 +218,14 @@
     kpis.innerHTML=cards.map(([label,v,num,kind])=>`<div class="cmp-kpi"><div>${esc(label)}</div><strong class="${valueColor(num,kind)}">${esc(v)}</strong></div>`).join('');
     modelLegend.innerHTML=legend(modelSeries);
     combinedLegend.innerHTML=legend([combinedSeries]);
-    svgChart(modelPlot,modelSeries,[from,...dates],'Individuell utveckling. Alla valda modeller startar på index 100 vid periodens början.');
+    if(modelHistory.value==='full') {
+      const history=fullModelHistory(keys);
+      modelExplanation.textContent='Hela historiken för varje vald modell. Varje kurva börjar vid index 100 på modellens egen resultatstart.';
+      svgChart(modelPlot,history.series,history.months,'Individuell utveckling från varje modells resultatstart. Varje kurva börjar på index 100.');
+    } else {
+      modelExplanation.textContent='Gemensam period för de valda modellerna. Samtliga kurvor börjar vid index 100.';
+      svgChart(modelPlot,modelSeries,[from,...dates],'Individuell utveckling under gemensam period med index 100 vid periodens början.');
+    }
     svgChart(combinedPlot,[combinedSeries],[from,...dates],'Kombinerad portfölj, index 100 vid periodens början.');
     const tableRows=keys.length>1?[{label:'Kombinerad portfölj',s:combinedStats,portfolio:true}]:[];
     tableRows.push(...keys.map(k=>({label:dataset.models[k].label,s:stats[k],color:palette[k]})));
@@ -208,5 +243,6 @@
   root.querySelector('#compare-select-all').addEventListener('click',()=>{order.forEach(k=>selected.add(k));notice.textContent='';renderChoices();render();});
   period.addEventListener('change',()=>{notice.textContent='';render();});
   rebalance.addEventListener('change',()=>{notice.textContent='';render();});
+  modelHistory.addEventListener('change',()=>{notice.textContent='';render();});
   renderChoices();render();
 })();
