@@ -6,6 +6,10 @@ const root=document.getElementById('adv-app');
 if(!ds||!root)return;
 const order=['hotCommodities','softCommodities','goldBug','kryptoKnight','satoshi','vitalik'];
 const selected=new Set(order);
+// Vikter anges som tiondels procent av AlgoLodge-andelen (1000 = 100 %).
+// Denna portfölj är hypotetisk; standardläget är lika vikt.
+const modelWeights={};
+let modelCustom=false;
 const visibleLines=new Set(['total','stocks','bonds','algo','benchmark']);
 const market={stocks:null,bonds:null};
 let weights={stocks:40,bonds:30,algo:30};
@@ -31,18 +35,55 @@ for(let i=1;i<rows.length;i++){let row=rows[i],m=monthKey(row[dateCol]);if(!m)co
 if(returnCol>=0){if(returns.size<2)throw Error('Hittade för få månader med giltig avkastning.');return {label,basis,returns:new Map([...returns].map(([k,v])=>[k,v.val]))};}
 const sorted=[...levels.entries()].sort((a,b)=>a[0].localeCompare(b[0]));const output=new Map();for(let i=1;i<sorted.length;i++){const [p,pv]=sorted[i-1], [m,v]=sorted[i];if(nextMonth(p)===m)output.set(m,v.val/pv.val-1)}
 if(output.size<2)throw Error('Kräver minst tre sammanhängande månadsvärden. Ange hela historiken inklusive föregående månad.');return {label,basis,returns:output};}
-function getModelReturns(){let arr=[...selected].map(k=>new Map(ds.models[k].returns));const avail=new Set();for(let a of arr)for(const k of a.keys())avail.add(k);let result=new Map();for(let m of [...avail].sort()){if(arr.every(a=>a.has(m)))result.set(m,arr.reduce((s,a)=>s+a.get(m),0)/arr.length)}return result;}
-// The complete model comparison only uses months available for *all* selected models.
-// The visual AlgoLodge line can extend further back, using the models active at each month.
-function getRollingModelReturns(){
- const arrays=[...selected].map(k=>new Map(ds.models[k].returns));
- const dates=new Set();arrays.forEach(a=>a.forEach((_,m)=>dates.add(m)));
- const result=new Map();
- for(const m of [...dates].sort()){
-  const available=arrays.filter(a=>a.has(m));
-  if(available.length)result.set(m,available.reduce((sum,a)=>sum+a.get(m),0)/available.length);
- }
+const activeModels=()=>order.filter(k=>selected.has(k));
+function distribute(units, keys, weightOf, minimum=0){
+ if(!keys.length)return {};
+ const result={};const spare=units-minimum*keys.length;
+ if(spare<0)throw Error('För få viktpunkter för antalet modeller.');
+ const weights=keys.map(k=>Math.max(0,Number(weightOf(k))||0));
+ const total=weights.reduce((a,b)=>a+b,0);
+ const shares=keys.map((k,i)=>spare*(total>0?weights[i]/total:1/keys.length));
+ let left=spare-shares.reduce((a,v)=>a+Math.floor(v),0);
+ keys.forEach((k,i)=>result[k]=minimum+Math.floor(shares[i]));
+ const ranked=keys.map((k,i)=>({k,i,rem:shares[i]-Math.floor(shares[i])})).sort((a,b)=>b.rem-a.rem||a.i-b.i);
+ for(let i=0;i<left;i++)result[ranked[i].k]++;
  return result;
+}
+function setEqualModelWeights(){
+ const arr=activeModels();Object.keys(modelWeights).forEach(k=>delete modelWeights[k]);
+ Object.assign(modelWeights,distribute(1000,arr,()=>1));modelCustom=false;
+}
+function reallocateModels(){
+ const arr=activeModels();if(!modelCustom){setEqualModelWeights();return;}
+ const previous={...modelWeights};
+ const fallback=arr.length?1000/arr.length:0;
+ const next=distribute(1000,arr,k=>previous[k]??fallback,10);
+ Object.keys(modelWeights).forEach(k=>delete modelWeights[k]);Object.assign(modelWeights,next);
+}
+function setModelWeight(key,value){
+ const arr=activeModels();if(!arr.includes(key))return;
+ if(arr.length===1){modelWeights[key]=1000;modelCustom=false;return;}
+ const units=Math.max(10,Math.min(1000-(arr.length-1)*10,Math.round(Number(value)*10)));
+ const others=arr.filter(k=>k!==key);
+ const rest=distribute(1000-units,others,k=>Math.max(1,(modelWeights[k]??0)-10),10);
+ modelWeights[key]=units;Object.assign(modelWeights,rest);modelCustom=true;
+}
+function getModelReturns(){
+ const arr=activeModels().map(k=>({weight:modelWeights[k]/1000,r:new Map(ds.models[k].returns)}));
+ const avail=new Set();arr.forEach(x=>x.r.forEach((_,m)=>avail.add(m)));
+ const result=new Map();for(const m of [...avail].sort()){
+  if(arr.length&&arr.every(x=>x.r.has(m)))result.set(m,arr.reduce((sum,x)=>sum+x.weight*x.r.get(m),0));
+ }return result;
+}
+// Older months may contain fewer models. Re-normalize only the active
+// models with observations; this line is a visual illustration, not the full portfolio.
+function getRollingModelReturns(){
+ const arr=activeModels().map(k=>({weight:modelWeights[k]/1000,r:new Map(ds.models[k].returns)}));
+ const dates=new Set();arr.forEach(x=>x.r.forEach((_,m)=>dates.add(m)));
+ const result=new Map();for(const m of [...dates].sort()){
+  const found=arr.filter(x=>x.r.has(m));const total=found.reduce((sum,x)=>sum+x.weight,0);
+  if(total>0)result.set(m,found.reduce((sum,x)=>sum+x.weight/total*x.r.get(m),0));
+ }return result;
 }
 function modelDateInfo(){
  const rolling=getRollingModelReturns(),shared=getModelReturns();
@@ -170,13 +211,39 @@ metrics.innerHTML=items.map(([label,val])=>`<div class="adv-kpi"><span>${label}<
 const bs=benchmark?stats(benchmark.months):null;
 table.innerHTML='<thead><tr><th>Portfölj</th><th>'+'Totalavkastning'+'</th><th>CAGR</th><th>Max nedgång</th><th>Volatilitet</th></tr></thead><tbody>'+[['Vald fördelning',s],...(bs?[['Klassisk 60/40',bs]]:[])].map(([label,x])=>`<tr><th>${label}</th><td>${pct(x.total)}</td><td>${pct(x.cagr)}</td><td>${pct(x.dd)}</td><td>${pct(x.vol)}</td></tr>`).join('')+'</tbody>';
 }
-function refreshWeights(){for(let k of ['stocks','bonds','algo']){$('adv-'+k+'-range').value=weights[k];$('adv-'+k+'-out').textContent=weights[k]+' %';$('adv-'+k+'-bar').style.width=weights[k]+'%'}$('adv-alloclabel').textContent='Totalt 100 % · '+weights.stocks+' % aktier · '+weights.bonds+' % obligationer · '+weights.algo+' % AlgoLodge';document.querySelectorAll('.adv-presets button').forEach(b=>b.classList.toggle('active',b.dataset.preset===`${weights.stocks},${weights.bonds},${weights.algo}`));render()}
+function renderModelWeightControls(){
+ const arr=activeModels(),area=$('adv-model-weights');
+ if(!arr.length){area.innerHTML='<p class="adv-muted">Markera minst en modell ovan.</p>';updateModelWeightDisplay();return;}
+ area.innerHTML=arr.map(k=>`<div class="adv-model-weight"><div class="adv-model-weight-head"><label for="model-weight-${k}">${modelNames[k]}</label><output id="model-weight-label-${k}" for="model-weight-${k}"></output></div><input type="range" id="model-weight-${k}" data-model-weight="${k}" aria-label="${modelNames[k]} – andel av AlgoLodge-kapitalet" min="1" max="100" step="0.1"></div>`).join('');
+ updateModelWeightDisplay();
+}
+function updateModelWeightDisplay(){
+ const arr=activeModels(),sum=arr.reduce((s,k)=>s+(modelWeights[k]||0),0);
+ for(const k of arr){const el=$('model-weight-'+k),out=$('model-weight-label-'+k);
+  const v=(modelWeights[k]||0)/10;
+  if(el){el.max=100-(arr.length-1);el.value=v;el.disabled=arr.length===1;}
+  if(out)out.textContent=v.toLocaleString('sv-SE',{minimumFractionDigits:1,maximumFractionDigits:1})+' %';
+ }
+ $('adv-model-weights-summary').textContent='Summa: '+(sum/10).toLocaleString('sv-SE',{maximumFractionDigits:1})+' %';
+ $('adv-model-custom-status').textContent=modelCustom?'Egen fördelning':'Lika vikt';
+ $('adv-model-default-note').textContent=modelCustom
+  ?'AlgoLodge-andelen följer dina modellvikter med månadsvis omviktning. Öppna avancerad fördelning för att ändra.'
+  :'AlgoLodge-andelen fördelas lika mellan de markerade modellerna med månadsvis omviktning.';
+ const first=arr[0];const part=first?(weights.algo*(modelWeights[first]/1000)):0;
+ $('adv-model-weight-example').textContent=first
+  ?`Exempel: ${modelNames[first]} utgör ${(modelWeights[first]/10).toLocaleString('sv-SE',{maximumFractionDigits:1})} % av AlgoLodge-andelen, motsvarande ${part.toLocaleString('sv-SE',{maximumFractionDigits:2})} % av hela portföljen vid nuvarande fördelning.`
+  :'Välj en modell för att justera fördelningen.';
+}
+function refreshWeights(){for(let k of ['stocks','bonds','algo']){$('adv-'+k+'-range').value=weights[k];$('adv-'+k+'-out').textContent=weights[k]+' %';$('adv-'+k+'-bar').style.width=weights[k]+'%'}$('adv-alloclabel').textContent='Totalt 100 % · '+weights.stocks+' % aktier · '+weights.bonds+' % obligationer · '+weights.algo+' % AlgoLodge';document.querySelectorAll('.adv-presets button').forEach(b=>b.classList.toggle('active',b.dataset.preset===`${weights.stocks},${weights.bonds},${weights.algo}`));updateModelWeightDisplay();render()}
 function changeWeight(changed,value){value=Math.min(100,Math.max(0,Math.round(value)));let others=['stocks','bonds','algo'].filter(k=>k!==changed);let rem=100-value;let old=weights[others[0]]+weights[others[1]];let first=old?Math.round(rem*weights[others[0]]/old):Math.round(rem/2);weights={[changed]:value,[others[0]]:first,[others[1]]:rem-first};refreshWeights()}
 function init(){
 $('adv-legend').addEventListener('change',e=>{const cb=e.target;if(!cb.matches('input[data-line]'))return;cb.checked?visibleLines.add(cb.dataset.line):visibleLines.delete(cb.dataset.line);render()});
 $('adv-only-portfolio').addEventListener('click',()=>{visibleLines.clear();visibleLines.add('total');render()});
 $('adv-show-all').addEventListener('click',()=>{['total','stocks','bonds','algo','benchmark'].forEach(k=>visibleLines.add(k));render()});
-const grid=$('adv-models');grid.innerHTML=order.map(k=>`<label class="adv-model"><input type="checkbox" data-model="${k}" checked/>${modelNames[k]}</label>`).join('');grid.querySelectorAll('input').forEach(el=>el.addEventListener('change',()=>{el.checked?selected.add(el.dataset.model):selected.delete(el.dataset.model);render()}));$('adv-select-all').addEventListener('click',()=>{if(selected.size===order.length)selected.clear();else order.forEach(k=>selected.add(k));grid.querySelectorAll('input').forEach(el=>el.checked=selected.has(el.dataset.model));render()});for(let k of ['stocks','bonds','algo'])$('adv-'+k+'-range').addEventListener('input',e=>changeWeight(k,e.target.value));document.querySelectorAll('.adv-presets button').forEach(b=>b.addEventListener('click',()=>{let [stocks,bonds,algo]=b.dataset.preset.split(',').map(Number);weights={stocks,bonds,algo};refreshWeights()}));['adv-period','adv-rebalance'].forEach(id=>$(id).addEventListener('change',render));refreshWeights();for(const k of ['stocks','bonds']){
+setEqualModelWeights();renderModelWeightControls();
+$('adv-model-weights').addEventListener('input',e=>{const slider=e.target;if(!slider.matches('input[data-model-weight]'))return;setModelWeight(slider.dataset.modelWeight,slider.value);updateModelWeightDisplay();render()});
+$('adv-model-equal').addEventListener('click',()=>{setEqualModelWeights();updateModelWeightDisplay();render()});
+const grid=$('adv-models');grid.innerHTML=order.map(k=>`<label class="adv-model"><input type="checkbox" data-model="${k}" checked/>${modelNames[k]}</label>`).join('');grid.querySelectorAll('input').forEach(el=>el.addEventListener('change',()=>{el.checked?selected.add(el.dataset.model):selected.delete(el.dataset.model);reallocateModels();renderModelWeightControls();render()}));$('adv-select-all').addEventListener('click',()=>{if(selected.size===order.length)selected.clear();else order.forEach(k=>selected.add(k));grid.querySelectorAll('input').forEach(el=>el.checked=selected.has(el.dataset.model));reallocateModels();renderModelWeightControls();render()});for(let k of ['stocks','bonds','algo'])$('adv-'+k+'-range').addEventListener('input',e=>changeWeight(k,e.target.value));document.querySelectorAll('.adv-presets button').forEach(b=>b.addEventListener('click',()=>{let [stocks,bonds,algo]=b.dataset.preset.split(',').map(Number);weights={stocks,bonds,algo};refreshWeights()}));['adv-period','adv-rebalance'].forEach(id=>$(id).addEventListener('change',render));refreshWeights();for(const k of ['stocks','bonds']){
  const url='assets/data/'+(k==='stocks'?'spy-monthly-total-return.csv':'agg-monthly-total-return.csv');
  fetch(url,{cache:'no-store'}).then(response=>{
   if(!response.ok)throw new Error('HTTP '+response.status);
