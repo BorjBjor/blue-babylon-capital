@@ -106,6 +106,11 @@ body.dark .adv-presets button:not(.active){background:#24455e;border-color:#4666
 .adv-hover-tooltip-title{display:block;margin-bottom:8px;color:#fff;font-size:13px;font-weight:750;text-transform:capitalize}
 .adv-hover-tooltip-row{display:flex;align-items:center;gap:7px;padding:4px 0;color:#e5f0f5}
 .adv-hover-tooltip-row i{display:block;width:8px;height:8px;border-radius:50%;flex:none}
+/* Portföljens mörkblå linje behålls, men ges vit kontur mot den mörka tooltipen. */
+.adv-hover-tooltip-row--portfolio{background:rgba(255,255,255,.09);border-radius:6px;margin:2px -6px 4px;padding:6px}
+.adv-hover-tooltip-row--portfolio span{font-weight:750;color:#fff}
+.adv-hover-tooltip-row--portfolio i{width:23px;height:10px;border:2px solid #fff;border-radius:4px;box-shadow:0 0 0 1px rgba(255,255,255,.17)}
+
 .adv-hover-tooltip-row span{flex:1;min-width:0}
 .adv-hover-tooltip-row b{margin-left:9px;white-space:nowrap;color:#fff;font-size:12px;font-variant-numeric:tabular-nums}
 @media(max-width:560px){.adv-hover-tooltip{position:relative!important;left:auto!important;top:auto!important;width:100%;max-width:100%;margin-top:8px;padding:10px 12px;font-size:11px}.adv-hover-tooltip-row b{font-size:11px}}

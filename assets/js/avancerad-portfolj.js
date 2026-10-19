@@ -197,7 +197,7 @@ function attachChartTooltip(host, dates, lines){
   heading.textContent=new Intl.DateTimeFormat('sv-SE',{month:'long',year:'numeric'}).format(new Date(Date.UTC(y,m-1,1)));
   popup.appendChild(heading);
   for(const line of items){
-   const row=document.createElement('div');row.className='adv-hover-tooltip-row';
+   const row=document.createElement('div');row.className='adv-hover-tooltip-row'+(line.key==='total'?' adv-hover-tooltip-row--portfolio':'');
    const dot=document.createElement('i');dot.style.backgroundColor=line.color;dot.setAttribute('aria-hidden','true');
    const label=document.createElement('span');label.textContent=line.name;
    const value=document.createElement('b');value.textContent=fmtValue(line.values.get(month));
