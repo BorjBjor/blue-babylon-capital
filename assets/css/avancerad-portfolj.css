@@ -22,3 +22,22 @@ body.dark .adv-chart-visibility-heading>strong{color:#d6e8f5}
 body.dark .adv-chart-line-toggle{background:#243f57;color:#eef5fb;border-color:#426079}
 body.dark .adv-curve-note{color:#c2d4e1}
 @media(max-width:680px){.adv-chart-visibility{padding:12px 10px}.adv-chart-line-toggle{font-size:11px;padding:7px}.adv-chart-actions{width:100%}.adv-chart-visibility-heading{align-items:flex-start}}
+
+/* Navigering och renare avancerad jämförelse. */
+.adv-hero-copy{flex:1 1 540px;min-width:0}
+.adv-hero-actions{display:flex;justify-content:flex-end;align-items:center;align-content:flex-start;flex-wrap:wrap;gap:9px;flex:0 0 auto;max-width:555px;padding-top:9px}
+.adv-hero-actions .adv-back{margin:0;padding:10px 12px;border-radius:9px;background:rgba(255,255,255,.055);font-size:12px;line-height:1.4;transition:background .2s,border-color .2s}
+.adv-hero-actions .adv-back:hover,.adv-hero-actions .adv-back:focus-visible{background:rgba(255,255,255,.16);border-color:#f0e3ce}
+.adv-hero-actions .adv-back-featured{background:rgba(222,191,139,.13);border-color:rgba(221,190,142,.9);color:#fff!important}
+.adv-hero-actions .adv-back-featured:hover{background:rgba(222,191,139,.25)}
+.adv-compare-shortcut{margin-top:19px;border-top:1px solid #e1eaf0;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.adv-compare-shortcut span{font-size:12px;line-height:1.5;color:#637d8f}
+.adv-compare-shortcut a{display:inline-flex;align-items:center;gap:10px;border-radius:9px;border:1px solid #bed0dd;padding:10px 13px;color:#245775!important;background:#f4f8fb;font-size:12px;font-weight:750;text-decoration:none}
+.adv-compare-shortcut a span{font-size:15px;color:#245775}
+.adv-compare-shortcut a:hover,.adv-compare-shortcut a:focus-visible{background:#e9f3f9;border-color:#82a8c3}
+body.dark .adv-compare-shortcut{border-top-color:#385369}
+body.dark .adv-compare-shortcut span{color:#bed1df}
+body.dark .adv-compare-shortcut a{background:#213f57;color:#f2f7fb!important;border-color:#61829a}
+body.dark .adv-compare-shortcut a span{color:#f2f7fb}
+@media(max-width:1140px){.adv-hero-row{flex-wrap:wrap}.adv-hero-actions{justify-content:flex-start;max-width:100%;padding-top:0}}
+@media(max-width:680px){.adv-hero-actions{gap:7px}.adv-hero-actions .adv-back{white-space:normal;padding:9px 11px}.adv-compare-shortcut a{width:100%;justify-content:space-between}}
