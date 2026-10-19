@@ -190,3 +190,10 @@ body.dark .cmp-workspace .cmp-feature-chart .cmp-feature-note p{color:#ccdae5}
   .cmp-workspace{align-items:start}
   .cmp-workspace .cmp-feature-chart .cmp-feature-note{margin-top:15px}
 }
+
+/* Hero shortcut: guides visitors from comparison to model selection advice. */
+.cmp-hero-main{display:flex;align-items:flex-start;justify-content:space-between;gap:25px}
+.cmp-hero-copy{flex:1 1 auto;min-width:0}
+.cmp-guide-cta{display:inline-flex;align-items:center;justify-content:center;gap:11px;flex:0 0 auto;margin-top:27px;padding:12px 20px;border:1px solid rgba(218,232,242,.55);border-radius:9px;background:rgba(255,255,255,.09);color:#fff!important;text-decoration:none!important;font:700 13px Inter,Arial,sans-serif;white-space:nowrap;transition:background .18s,border-color .18s,transform .18s}
+.cmp-guide-cta:hover,.cmp-guide-cta:focus-visible{background:rgba(255,255,255,.19);border-color:rgba(255,255,255,.85);transform:translateY(-1px)}
+@media(max-width:720px){.cmp-hero-main{flex-direction:column;gap:15px}.cmp-guide-cta{margin-top:0;padding:11px 18px}}
