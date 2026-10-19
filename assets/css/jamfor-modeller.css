@@ -218,3 +218,8 @@ body.dark .cmp-workspace .cmp-feature-chart .cmp-feature-note p{color:#ccdae5}
 body.dark .cmp-model-history-control label{color:#bacddd}
 body.dark .cmp-model-history-control select{background:#223e56;border-color:#45627a;color:#e9f1f7}
 @media(max-width:650px){.cmp-model-history-control{margin-left:0;width:100%}.cmp-model-history-control select{width:100%}}
+
+.cmp-header-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.cmp-advanced-link{display:inline-flex;align-items:center;background:#214f74;color:#fff!important;padding:10px 13px;border-radius:9px;text-decoration:none;font-size:12px;font-weight:750;line-height:1.3}
+.cmp-advanced-link:hover{background:#163c5e;color:#fff}
+@media(max-width:750px){.cmp-header-actions{justify-content:flex-start}.cmp-advanced-link{font-size:12px}}
