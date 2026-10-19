@@ -34,6 +34,23 @@ if(output.size<2)throw Error('Kräver minst tre sammanhängande månadsvärden. 
 function status(type,txt,ok=false){$(type+'-status').textContent=txt;$(type+'-status').className='adv-data-status'+(ok?' ok':'');}
 function updateBasis(type){let info=$(type+'-basis');if(!info||!market[type])return;if(market[type].basis==='price')info.textContent=type==='stocks'?'SPY följer S&P 500. Nuvarande resultat bygger på börskurser, utan återinvesterade utdelningar. Dessa läggs till i nästa steg.':'iShares Core U.S. Aggregate Bond ETF (AGG) ger bred obligationsexponering. Ränteutdelningar ingår ännu inte; de läggs till i nästa steg.';else if(market[type].basis==='total-return')info.textContent='Utdelningsjusterad kurs (Adj Close / totalavkastningsindex). Kontrollera datakällans justeringsmetod.';else info.textContent='Importerade månadsavkastningar. Kontrollera att serien inkluderar utdelningar innan den används som totalavkastning.';}
 function getModelReturns(){let arr=[...selected].map(k=>new Map(ds.models[k].returns));const avail=new Set();for(let a of arr)for(const k of a.keys())avail.add(k);let result=new Map();for(let m of [...avail].sort()){if(arr.every(a=>a.has(m)))result.set(m,arr.reduce((s,a)=>s+a.get(m),0)/arr.length)}return result;}
+// The complete model comparison only uses months available for *all* selected models.
+// The visual AlgoLodge line can extend further back, using the models active at each month.
+function getRollingModelReturns(){
+ const arrays=[...selected].map(k=>new Map(ds.models[k].returns));
+ const dates=new Set();arrays.forEach(a=>a.forEach((_,m)=>dates.add(m)));
+ const result=new Map();
+ for(const m of [...dates].sort()){
+  const available=arrays.filter(a=>a.has(m));
+  if(available.length)result.set(m,available.reduce((sum,a)=>sum+a.get(m),0)/available.length);
+ }
+ return result;
+}
+function modelDateInfo(){
+ const rolling=getRollingModelReturns(),shared=getModelReturns();
+ const firstRolling=[...rolling.keys()].sort()[0];const firstCommon=[...shared.keys()].sort()[0];
+ return {rolling,shared,firstRolling,firstCommon};
+}
 function commonSeries(){let needed=[];if(weights.stocks>0){if(!market.stocks)return {error:'Kunde inte läsa SPY-serien. Kontrollera att kursfilen finns på webbplatsen.'};needed.push({key:'stocks',r:market.stocks.returns})}if(weights.bonds>0){if(!market.bonds)return {error:'Kunde inte läsa AGG-serien. Kontrollera att kursfilen finns på webbplatsen.'};needed.push({key:'bonds',r:market.bonds.returns})}if(weights.algo>0){if(!selected.size)return{error:'Välj minst en AlgoLodge-modell när AlgoLodge har en kapitalandel.'};needed.push({key:'algo',r:getModelReturns()})}
 if(!needed.length)return{error:'Ingen tillgångsklass vald.'};let keys=[...needed[0].r.keys()].filter(m=>needed.every(x=>x.r.has(m))&&m<='2026-09').sort();if(keys.length<2)return {error:'För få gemensamma månader i de inlästa månadsserierna (till och med september 2026).'};
 if(weights.algo===0)keys=keys.filter(m=>m>='2019-01');
@@ -67,7 +84,7 @@ return result;
 }
 function drawChart(dates,lines,baseDate){
 const displayed=lines.filter(l=>visibleLines.has(l.key));
-if(!displayed.length)return '<div class="adv-chart-empty"><strong>Inga kurvor visas</strong><span>Markera minst en ruta ovanför grafen.</span></div>';
+if(!displayed.length)return '<div class="adv-chart-empty"><strong>Inga kurvor visas</strong><span>Markera minst en kurva under grafen.</span></div>';
 const vbW=820,vbH=360,left=52,right=16,top=17,bottom=45;
 const numbers=displayed.flatMap(l=>[...l.values.values()].filter(Number.isFinite));
 if(!numbers.length)return '<div class="adv-chart-empty">Det finns inga datapunkter för de valda kurvorna.</div>';
@@ -91,13 +108,20 @@ const used=new Set();for(let i=0;i<tickCount;i++){
  const d=dates[pos];svg+=`<text x="${X(pos)}" y="${vbH-13}" text-anchor="${i===0?'start':i===tickCount-1?'end':'middle'}" fill="#718b9f" font-size="11">${esc(d)}</text>`;
 }
 for(const l of displayed){
- let parts=[],part='';
+ let parts=[],part='',partStyle='full',lastPoint='';
+ const flush=()=>{if(part)parts.push({d:part,style:partStyle});part=''};
  for(let i=0;i<dates.length;i++){
-  const v=l.values.get(dates[i]);if(!Number.isFinite(v)){if(part)parts.push(part);part='';continue}
-  part+=(part?' L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1);
+  const v=l.values.get(dates[i]);
+  if(!Number.isFinite(v)){flush();lastPoint='';continue}
+  const point=X(i).toFixed(1)+' '+Y(v).toFixed(1);
+  const style=l.dashedBefore&&dates[i]<l.dashedBefore?'early':'full';
+  if(part&&partStyle!==style){flush();part='M'+(lastPoint||point)+' L'+point;partStyle=style;}
+  else if(!part){part='M'+point;partStyle=style;}
+  else part+=' L'+point;
+  lastPoint=point;
  }
- if(part)parts.push(part);
- for(let d of parts){svg+=`<path d="${d}" fill="none" stroke="${l.color}" stroke-width="${l.key==='total'?4:2.4}" stroke-linejoin="round" stroke-linecap="round" opacity="${l.key==='total'?1:.90}"><title>${esc(l.name)}</title></path>`}
+ flush();
+ for(const p of parts){svg+=`<path d="${p.d}" fill="none" stroke="${l.color}" stroke-width="${l.key==='total'?4:2.4}" ${p.style==='early'?'stroke-dasharray="5 5"':''} stroke-linejoin="round" stroke-linecap="round" opacity="${l.key==='total'?1:.90}"><title>${esc(l.name)}${p.style==='early'?' – innan alla valda modeller startat':''}</title></path>`}
 }
 return svg+'</svg>';
 }
@@ -107,7 +131,7 @@ function updateLegend(lines){
 }
 function render(){
 const chart=$('adv-chart'),summary=$('adv-info'),ret=$('adv-return'),legend=$('adv-legend'),metrics=$('adv-kpis'),table=$('adv-table'),result=commonSeries();
-if(result.error){chart.innerHTML='<div class="adv-chart-empty"><strong>För jämförelsen behövs månadsdata</strong><span>'+result.error+'</span></div>';ret.textContent='—';legend.innerHTML='';metrics.innerHTML='';summary.textContent=result.error;table.innerHTML='';return}
+if(result.error){const note=$('adv-model-history-note');if(note)note.textContent='';chart.innerHTML='<div class="adv-chart-empty"><strong>För jämförelsen behövs månadsdata</strong><span>'+result.error+'</span></div>';ret.textContent='—';legend.innerHTML='';metrics.innerHTML='';summary.textContent=result.error;table.innerHTML='';return}
 const {keys,by}=result;
 const mode=$('adv-rebalance').value;
 const data=combine(keys,by,{...weights},mode),s=stats(data.months);
@@ -120,11 +144,12 @@ const lines=[{key:'total',name:'Min portfölj',color:colors.total,values:portfol
 for(const [key,name] of [['stocks','Aktier – S&P 500'],['bonds','Obligationer – AGG']]){
  if(market[key])lines.push({key,name,color:colors[key],values:chartValues(market[key].returns,dates,baseDate)});
 }
-if(selected.size){
- const retMap=getModelReturns();const first=[...retMap.keys()].sort()[0];
- if(first){const algoStart=prevMonth(first),anchor=algoStart>baseDate?algoStart:baseDate;
-   lines.push({key:'algo',name:'AlgoLodge-modeller',color:colors.algo,values:chartValues(retMap,dates,anchor)});
- }
+const modelDates=modelDateInfo();
+if(selected.size && modelDates.firstRolling){
+ // Extend the AlgoLodge-only line to the earliest available model; do not
+ // backfill models that had not yet started. Earlier part is shown dashed.
+ lines.push({key:'algo',name:'Valda AlgoLodge-modeller',color:colors.algo,
+  values:chartValues(modelDates.rolling,dates,baseDate),dashedBefore:modelDates.firstCommon});
 }
 let benchmark=null;
 if(market.stocks&&market.bonds&&keys.every(m=>market.stocks.returns.has(m)&&market.bonds.returns.has(m))){
@@ -136,7 +161,15 @@ if(market.stocks&&market.bonds&&keys.every(m=>market.stocks.returns.has(m)&&mark
 const priceOnly=['stocks','bonds'].some(k=>weights[k]>0&&market[k]?.basis==='price');
 $('adv-return-label').textContent=priceOnly?'Kursavkastning':'Totalavkastning';
 updateLegend(lines);chart.innerHTML=drawChart(dates,lines,baseDate);ret.textContent=pct(s.total);
-summary.textContent=keys.length+' månader · '+keys[0]+'–'+keys.at(-1)+' · USD · '+(mode==='monthly'?'Månadsvis omviktning':'Utan omviktning')+' · '+(['stocks','bonds'].some(k=>weights[k]>0&&market[k]?.basis==='price')?'ETF: utdelningar ingår ännu inte':'ETF: justerad avkastning eller ej vald');
+summary.textContent=keys.length+' portföljmånader · '+keys[0]+'–'+keys.at(-1)+' · USD · '+(mode==='monthly'?'Månadsvis omviktning':'Utan omviktning')+' · '+(['stocks','bonds'].some(k=>weights[k]>0&&market[k]?.basis==='price')?'ETF: utdelningar ingår ännu inte':'ETF: justerad avkastning eller ej vald');
+const historyNote=$('adv-model-history-note');
+if(historyNote){
+ const begin=modelDates.firstRolling?prevMonth(modelDates.firstRolling):null;
+ const common=modelDates.firstCommon;
+ historyNote.textContent=begin&&common
+  ?`Modellernas kurva visas från ${begin} med de modeller som då hade startat (streckad linje). Alla markerade modeller finns med från ${common} (heldragen linje). Portföljens statistik använder samma start för alla markerade modeller.`
+  :'Markera minst en modell för att visa modellhistoriken.';
+}
 const items=[[priceOnly?'Kursavkastning':'Totalavkastning',pct(s.total)],['Årlig avkastning (CAGR)',pct(s.cagr)],['Största nedgång',pct(s.dd)],['Volatilitet per år',pct(s.vol)],['Sharpekvot (ränta 0 %)',Number.isFinite(s.sharpe)?num(s.sharpe):'—'],['Positiva månader',pct(s.positive,0)]];
 metrics.innerHTML=items.map(([label,val])=>`<div class="adv-kpi"><span>${label}</span><strong class="${label==='Största nedgång'?'down':''}">${val}</strong></div>`).join('');
 const bs=benchmark?stats(benchmark.months):null;

@@ -46,3 +46,7 @@ body.dark .adv-compare-shortcut a span{color:#f2f7fb}
 .adv-chart-panel .adv-chart-frame{margin-top:20px}
 .adv-chart-panel .adv-chart-visibility{margin-top:16px}
 .adv-chart-panel .adv-infobar{margin-top:12px}
+
+/* Clarify the progressive AlgoLodge model history below the graph */
+#adv-model-history-note{margin:12px 0 2px;font-size:12px;line-height:1.65;color:#526f83;border-top:1px solid #e1e9ef;padding-top:11px}
+body.dark #adv-model-history-note{color:#c5d8e6;border-color:#3a526a}
