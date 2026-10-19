@@ -100,7 +100,7 @@ body.dark .cmp-axis{fill:#b0c0cd}
 .cmp-hero p:not(.cmp-kicker){font-size:15px;line-height:1.55}
 .cmp-kicker{margin-bottom:10px}
 .cmp-breadcrumb{margin-bottom:13px}
-.cmp-workspace{display:grid;grid-template-columns:minmax(300px,350px) minmax(0,1fr);gap:18px;align-items:start;margin-bottom:22px}
+.cmp-workspace{display:grid;grid-template-columns:minmax(300px,348px) minmax(0,1fr);gap:20px;align-items:start;margin-bottom:22px}
 .cmp-workspace > .cmp-panel,.cmp-workspace > .cmp-chart-card{margin-bottom:0;min-width:0}
 .cmp-workspace .cmp-select-panel{padding:22px 20px;border-top:3px solid #b18b52}
 .cmp-select-panel .cmp-panel-head{align-items:center;margin-bottom:10px;gap:8px}
@@ -118,7 +118,7 @@ body.dark .cmp-axis{fill:#b0c0cd}
 .cmp-select-panel .cmp-field label{font-size:11px}
 .cmp-select-panel .cmp-field select{width:100%;min-height:41px;padding:9px 31px 9px 11px;font-size:12px}
 .cmp-select-panel .cmp-time{font-size:12px;line-height:1.45;margin-top:15px}
-.cmp-feature-chart{padding:0 24px 20px;border:1px solid #cbdde9;box-shadow:0 13px 35px rgba(20,52,77,.10)}
+.cmp-feature-chart{padding:0 24px 20px;border:1px solid #cbdde9;box-shadow:0 13px 35px rgba(20,52,77,.10);overflow:hidden}
 .cmp-feature-topline{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:20px 0 15px;border-bottom:1px solid #e4ebef}
 .cmp-feature-eyebrow{color:#98763f;font-size:11px;font-weight:800;letter-spacing:.14em}
 .cmp-weight-summary{color:#385d78;background:#edf4f7;padding:7px 11px;border-radius:999px;font-weight:700;font-size:12px}
@@ -130,6 +130,15 @@ body.dark .cmp-axis{fill:#b0c0cd}
 .cmp-main-return strong{font:500 clamp(23px,2.3vw,32px) Georgia,serif;color:#184b69;white-space:nowrap}
 .cmp-feature-chart .cmp-legend{margin:14px 0 2px}
 .cmp-feature-chart .cmp-chart{margin-top:0}
+.cmp-feature-note{display:grid;grid-template-columns:auto 1fr;gap:12px 14px;align-items:flex-start;margin-top:16px;padding:15px 16px;border-top:1px solid #e7edf2;background:linear-gradient(180deg,#fbfcfd 0%,#f4f8fb 100%);border-radius:12px;color:#5d7384}
+.cmp-feature-note::before{content:"";display:block;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#1b4a70,#28577f);box-shadow:inset 0 0 0 5px rgba(255,255,255,.18)}
+.cmp-feature-note strong{display:block;font-size:13px;line-height:1.5;color:#193c59;margin:0 0 3px}
+.cmp-feature-note p{grid-column:2;margin:0;font-size:13px;line-height:1.7;color:#62798b}
+body.dark .cmp-feature-note{border-top-color:#41596e;background:linear-gradient(180deg,#1a354d 0%,#203f58 100%);color:#d8e6f0}
+body.dark .cmp-feature-note strong{color:#f2f7fb}
+body.dark .cmp-feature-note p{color:#c8d9e5}
+@media(max-width:560px){.cmp-feature-note{grid-template-columns:1fr;gap:10px;padding:13px}.cmp-feature-note::before{display:none}.cmp-feature-note p{grid-column:auto}}
+
 body.dark .cmp-feature-chart{border-color:#607a8c}
 body.dark .cmp-feature-topline{border-color:#425a6e}
 body.dark .cmp-weight-summary{background:#28475d;color:#d5e7f3}
@@ -160,14 +169,24 @@ body.dark .cmp-main-return strong{color:#eaf4fa}
  .cmp-feature-heading{flex-direction:column}
 }
 
-/* AlgoLodge modellöversikt: kompakt introduktion och tydlig jämförelseknapp. */
-body .iasg-page{padding-top:28px}
-.iasg-page .iasg-intro{margin-bottom:18px!important}
-.iasg-page .iasg-intro h1{font-size:clamp(34px,4.1vw,52px);line-height:1.16;margin:0}
-.iasg-page .cmp-entry{margin:0 0 24px;padding:22px 27px;background:linear-gradient(115deg,#153853,#245472);gap:24px}
-.iasg-page .cmp-entry h2{margin:6px 0 7px}
-.iasg-page .cmp-entry-cta{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:16px 27px;background:#e8bd73;color:#17364f!important;border:1px solid #f5d89f;border-radius:10px;font-size:16px;font-weight:800;box-shadow:0 8px 22px rgba(9,30,49,.24);transition:background .18s ease,transform .18s ease,box-shadow .18s ease}
-.iasg-page .cmp-entry-cta:hover{background:#f6d493;transform:translateY(-2px);box-shadow:0 11px 24px rgba(9,30,49,.3)}
-.iasg-page .cmp-entry-cta:focus-visible{outline:3px solid #91c8e5;outline-offset:3px}
-@media(max-width:720px){body .iasg-page{padding-top:23px}.iasg-page .cmp-entry{padding:22px 19px;margin-bottom:22px;gap:18px}.iasg-page .cmp-entry-cta{width:100%}}
-@media(prefers-reduced-motion:reduce){.iasg-page .cmp-entry-cta{transition:none}.iasg-page .cmp-entry-cta:hover{transform:none}}
+/* En gemensam nederkant mellan modellval och portfoeljgraf. */
+.cmp-workspace{align-items:stretch}
+.cmp-workspace .cmp-feature-chart{display:flex;flex-direction:column}
+.cmp-workspace .cmp-feature-chart .cmp-feature-note{
+  display:block;
+  margin-top:auto;
+  padding:13px 16px;
+  border-top:1px solid #e0e9f0;
+  border-radius:9px;
+  background:#f7f9fb;
+}
+.cmp-workspace .cmp-feature-chart .cmp-feature-note::before{display:none}
+.cmp-workspace .cmp-feature-chart .cmp-feature-note strong{display:block;margin:0 0 4px;font-size:12px;line-height:1.4;color:#244764}
+.cmp-workspace .cmp-feature-chart .cmp-feature-note p{margin:0;font-size:12px;line-height:1.6;color:#597386}
+body.dark .cmp-workspace .cmp-feature-chart .cmp-feature-note{background:#20394f;border-color:#435e72}
+body.dark .cmp-workspace .cmp-feature-chart .cmp-feature-note strong{color:#f0f6fb}
+body.dark .cmp-workspace .cmp-feature-chart .cmp-feature-note p{color:#ccdae5}
+@media(max-width:850px){
+  .cmp-workspace{align-items:start}
+  .cmp-workspace .cmp-feature-chart .cmp-feature-note{margin-top:15px}
+}
