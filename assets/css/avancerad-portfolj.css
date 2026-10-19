@@ -51,11 +51,11 @@ body.dark .adv-compare-shortcut a span{color:#f2f7fb}
 #adv-model-history-note{margin:12px 0 2px;font-size:12px;line-height:1.65;color:#526f83;border-top:1px solid #e1e9ef;padding-top:11px}
 body.dark #adv-model-history-note{color:#c5d8e6;border-color:#3a526a}
 
-/* Tydlig, kompakt upplysning om underlaget för den avancerade portföljgrafen. */
-.adv-live-results-note{margin:13px 0 4px;padding:10px 13px;background:#f7f9fb;border-left:3px solid #b28a51;border-radius:0 8px 8px 0;color:#587184;font-size:12px;line-height:1.6}
-.adv-live-results-note strong{color:#214761;font-weight:750}
-body.dark .adv-live-results-note{background:#213a50;color:#cfdfeb}
-body.dark .adv-live-results-note strong{color:#f0f6fa}
+/* Diskret metodnotering under grafen i stället för en färgad informationsruta. */
+.adv-live-results-note{margin:10px 0 0;padding:0 2px;background:transparent;border:0;border-radius:0;color:#738899;font-size:11px;line-height:1.55}
+.adv-live-results-note strong{color:#60788b;font-weight:650}
+body.dark .adv-live-results-note{background:transparent;color:#b4c5d3}
+body.dark .adv-live-results-note strong{color:#d0deea}
 
 /* Utfällbara individuella modellvikter – endast avancerat läge. */
 .adv-model-default-note{margin-top:11px!important}
