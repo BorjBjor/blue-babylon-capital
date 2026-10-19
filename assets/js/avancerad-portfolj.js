@@ -160,9 +160,80 @@ for(const l of displayed){
   lastPoint=point;
  }
  flush();
- for(const p of parts){svg+=`<path d="${p.d}" fill="none" stroke="${l.color}" stroke-width="${l.key==='total'?4:2.4}" ${p.style==='early'?'stroke-dasharray="5 5"':''} stroke-linejoin="round" stroke-linecap="round" opacity="${l.key==='total'?1:.90}"><title>${esc(l.name)}${p.style==='early'?' – innan alla valda modeller startat':''}</title></path>`}
+ for(const p of parts){svg+=`<path d="${p.d}" fill="none" stroke="${l.color}" stroke-width="${l.key==='total'?4:2.4}" ${p.style==='early'?'stroke-dasharray="5 5"':''} stroke-linejoin="round" stroke-linecap="round" opacity="${l.key==='total'?1:.90}"/>`}
 }
 return svg+'</svg>';
+}
+// Interaktiv kurvinformation för både mus, tangentbord och tryck på mobil.
+function attachChartTooltip(host, dates, lines){
+ const svg=host.querySelector('svg');
+ if(!svg||!dates.length)return;
+ const active=lines.filter(l=>visibleLines.has(l.key));
+ if(!active.length)return;
+ const popup=document.createElement('div');
+ popup.className='adv-hover-tooltip';popup.hidden=true;
+ popup.setAttribute('role','status');popup.setAttribute('aria-live','off');
+ host.appendChild(popup);
+ const ns='http://www.w3.org/2000/svg';
+ const cursor=document.createElementNS(ns,'line');
+ cursor.setAttribute('class','adv-hover-cursor');
+ cursor.setAttribute('y1','17');cursor.setAttribute('y2','315');
+ cursor.setAttribute('visibility','hidden');
+ svg.appendChild(cursor);
+ const fmtValue=v=>v.toLocaleString('sv-SE',{minimumFractionDigits:1,maximumFractionDigits:1});
+ let focusedIndex=dates.length-1;
+ const renderAt=(index,localY)=>{
+  const month=dates[index];
+  const items=active.filter(l=>Number.isFinite(l.values.get(month)));
+  if(!items.length){popup.hidden=true;cursor.setAttribute('visibility','hidden');return;}
+  focusedIndex=index;
+  const x=52+index*(820-52-16)/Math.max(1,dates.length-1);
+  cursor.setAttribute('x1',x);cursor.setAttribute('x2',x);
+  cursor.setAttribute('visibility','visible');
+  popup.replaceChildren();
+  const heading=document.createElement('strong');
+  heading.className='adv-hover-tooltip-title';
+  const [y,m]=month.split('-').map(Number);
+  heading.textContent=new Intl.DateTimeFormat('sv-SE',{month:'long',year:'numeric'}).format(new Date(Date.UTC(y,m-1,1)));
+  popup.appendChild(heading);
+  for(const line of items){
+   const row=document.createElement('div');row.className='adv-hover-tooltip-row';
+   const dot=document.createElement('i');dot.style.backgroundColor=line.color;dot.setAttribute('aria-hidden','true');
+   const label=document.createElement('span');label.textContent=line.name;
+   const value=document.createElement('b');value.textContent=fmtValue(line.values.get(month));
+   row.append(dot,label,value);popup.appendChild(row);
+  }
+  popup.hidden=false;
+  const rect=svg.getBoundingClientRect();
+  const hostRect=host.getBoundingClientRect();
+  const screenX=x/820*rect.width+(rect.left-hostRect.left);
+  const proposedLeft=screenX+14;
+  const maxLeft=Math.max(0,host.clientWidth-popup.offsetWidth-5);
+  popup.style.left=Math.max(0,Math.min(maxLeft,proposedLeft))+'px';
+  const maxTop=Math.max(0,host.clientHeight-popup.offsetHeight-4);
+  popup.style.top=Math.max(4,Math.min(maxTop,localY-popup.offsetHeight-12))+'px';
+ };
+ const onPoint=e=>{
+  const rect=svg.getBoundingClientRect();
+  if(!rect.width)return;
+  const x=(e.clientX-rect.left)/rect.width*820;
+  if(x<52||x>804){if(e.pointerType!=='touch'){hide();}return;}
+  const i=Math.max(0,Math.min(dates.length-1,Math.round((x-52)/(820-52-16)*(dates.length-1))));
+  renderAt(i,e.clientY-host.getBoundingClientRect().top);
+ };
+ const hide=()=>{popup.hidden=true;cursor.setAttribute('visibility','hidden')};
+ svg.addEventListener('pointermove',e=>{if(e.pointerType!=='touch')onPoint(e)});
+ svg.addEventListener('pointerdown',onPoint);
+ svg.addEventListener('pointerleave',e=>{if(e.pointerType!=='touch')hide()});
+ svg.setAttribute('tabindex','0');
+ svg.addEventListener('keydown',e=>{
+  if(!['ArrowLeft','ArrowRight','Escape'].includes(e.key))return;
+  if(e.key==='Escape'){hide();return;}
+  e.preventDefault();
+  const i=e.key==='ArrowLeft'?Math.max(0,focusedIndex-1):Math.min(dates.length-1,focusedIndex+1);
+  renderAt(i,svg.getBoundingClientRect().height/2);
+ });
+ svg.addEventListener('blur',hide);
 }
 function updateLegend(lines){
  const legend=$('adv-legend');
@@ -196,7 +267,7 @@ if(market.stocks&&market.bonds&&keys.every(m=>market.stocks.returns.has(m)&&mark
  lines.push({key:'benchmark',name:'60/40 (aktier/obligationer)',color:colors.benchmark,values:chartValues(bRate,dates,baseDate)});
 }
 $('adv-return-label').textContent='Totalavkastning';
-updateLegend(lines);chart.innerHTML=drawChart(dates,lines,baseDate);ret.textContent=pct(s.total);
+updateLegend(lines);chart.innerHTML=drawChart(dates,lines,baseDate);attachChartTooltip(chart,dates,lines);ret.textContent=pct(s.total);
 summary.textContent=keys.length+' portföljmånader · '+keys[0]+'–'+keys.at(-1)+' · USD · '+(mode==='monthly'?'Månadsvis omviktning':'Utan omviktning')+' · Alla kurvor startar vid 100 · ETF: inklusive återinvesterade utdelningar, före skatt';
 const historyNote=$('adv-model-history-note');
 if(historyNote){

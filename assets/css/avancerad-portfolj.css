@@ -96,3 +96,16 @@ body.dark .adv-model-weight-head label,body.dark .adv-model-weight-head output,b
 .adv-presets button.active{background:#1d5b86;border-color:#1d5b86;color:#fff;box-shadow:0 3px 9px rgba(30,85,128,.12)}
 body.dark .adv-presets button:not(.active){background:#24455e;border-color:#46667f;color:#eff6fa}
 @media(max-width:680px){.adv-presets{gap:7px}.adv-presets button{flex:0 1 auto;min-height:37px}}
+
+/* Informationsruta för interaktiva kurvor i avancerad jämförelse */
+.adv-chart-frame{position:relative}
+.adv-chart-frame svg{touch-action:pan-y}
+.adv-hover-cursor{stroke:#7692a7;stroke-width:1.1;stroke-dasharray:4 5;pointer-events:none}
+.adv-hover-tooltip{position:absolute;z-index:8;min-width:205px;max-width:min(285px,calc(100% - 8px));padding:12px 13px;background:rgba(20,48,72,.97);color:#fff;box-shadow:0 10px 27px rgba(10,40,61,.25);border-radius:10px;font:12px/1.45 Inter,Arial,sans-serif;pointer-events:none}
+.adv-hover-tooltip[hidden]{display:none!important}
+.adv-hover-tooltip-title{display:block;margin-bottom:8px;color:#fff;font-size:13px;font-weight:750;text-transform:capitalize}
+.adv-hover-tooltip-row{display:flex;align-items:center;gap:7px;padding:4px 0;color:#e5f0f5}
+.adv-hover-tooltip-row i{display:block;width:8px;height:8px;border-radius:50%;flex:none}
+.adv-hover-tooltip-row span{flex:1;min-width:0}
+.adv-hover-tooltip-row b{margin-left:9px;white-space:nowrap;color:#fff;font-size:12px;font-variant-numeric:tabular-nums}
+@media(max-width:560px){.adv-hover-tooltip{position:relative!important;left:auto!important;top:auto!important;width:100%;max-width:100%;margin-top:8px;padding:10px 12px;font-size:11px}.adv-hover-tooltip-row b{font-size:11px}}
