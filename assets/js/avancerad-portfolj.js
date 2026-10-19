@@ -31,8 +31,6 @@ for(let i=1;i<rows.length;i++){let row=rows[i],m=monthKey(row[dateCol]);if(!m)co
 if(returnCol>=0){if(returns.size<2)throw Error('Hittade för få månader med giltig avkastning.');return {label,basis,returns:new Map([...returns].map(([k,v])=>[k,v.val]))};}
 const sorted=[...levels.entries()].sort((a,b)=>a[0].localeCompare(b[0]));const output=new Map();for(let i=1;i<sorted.length;i++){const [p,pv]=sorted[i-1], [m,v]=sorted[i];if(nextMonth(p)===m)output.set(m,v.val/pv.val-1)}
 if(output.size<2)throw Error('Kräver minst tre sammanhängande månadsvärden. Ange hela historiken inklusive föregående månad.');return {label,basis,returns:output};}
-function status(type,txt,ok=false){$(type+'-status').textContent=txt;$(type+'-status').className='adv-data-status'+(ok?' ok':'');}
-function updateBasis(type){let info=$(type+'-basis');if(!info||!market[type])return;if(market[type].basis==='price')info.textContent=type==='stocks'?'SPY följer S&P 500. Nuvarande resultat bygger på börskurser, utan återinvesterade utdelningar. Dessa läggs till i nästa steg.':'iShares Core U.S. Aggregate Bond ETF (AGG) ger bred obligationsexponering. Ränteutdelningar ingår ännu inte; de läggs till i nästa steg.';else if(market[type].basis==='total-return')info.textContent='Utdelningsjusterad kurs (Adj Close / totalavkastningsindex). Kontrollera datakällans justeringsmetod.';else info.textContent='Importerade månadsavkastningar. Kontrollera att serien inkluderar utdelningar innan den används som totalavkastning.';}
 function getModelReturns(){let arr=[...selected].map(k=>new Map(ds.models[k].returns));const avail=new Set();for(let a of arr)for(const k of a.keys())avail.add(k);let result=new Map();for(let m of [...avail].sort()){if(arr.every(a=>a.has(m)))result.set(m,arr.reduce((s,a)=>s+a.get(m),0)/arr.length)}return result;}
 // The complete model comparison only uses months available for *all* selected models.
 // The visual AlgoLodge line can extend further back, using the models active at each month.
@@ -94,7 +92,7 @@ if(low===high){low=0;high=200}
 const X=i=>left+i*(vbW-left-right)/Math.max(1,dates.length-1);
 const Y=v=>top+(high-v)*(vbH-top-bottom)/(high-low);
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
-let svg=`<svg viewBox="0 0 ${vbW} ${vbH}" role="img" aria-label="Historisk kursutveckling och hypotetisk portfölj. ETF-serierna visas från december 2018, när hela perioden väljs.">`;
+let svg=`<svg viewBox="0 0 ${vbW} ${vbH}" role="img" aria-label="Historisk totalavkastning inklusive återinvesterade ETF-utdelningar och hypotetisk portfölj. ETF-serierna visas från december 2018, när hela perioden väljs.">`;
 for(let i=0;i<5;i++){
  const v=low+(high-low)*i/4,y=Y(v);
  svg+=`<line x1="${left}" x2="${vbW-right}" y1="${y}" y2="${y}" stroke="#e7edf2"/><text x="${left-10}" y="${y+4}" text-anchor="end" fill="#6d879a" font-size="12">${Math.round(v)}</text>`;
@@ -158,10 +156,9 @@ if(market.stocks&&market.bonds&&keys.every(m=>market.stocks.returns.has(m)&&mark
  const bRate=new Map();for(const [m,r] of stockR){if(bondR.has(m))bRate.set(m,.6*r+.4*bondR.get(m));}
  lines.push({key:'benchmark',name:'60/40 (aktier/obligationer)',color:colors.benchmark,values:chartValues(bRate,dates,baseDate)});
 }
-const priceOnly=['stocks','bonds'].some(k=>weights[k]>0&&market[k]?.basis==='price');
-$('adv-return-label').textContent=priceOnly?'Kursavkastning':'Totalavkastning';
+$('adv-return-label').textContent='Totalavkastning';
 updateLegend(lines);chart.innerHTML=drawChart(dates,lines,baseDate);ret.textContent=pct(s.total);
-summary.textContent=keys.length+' portföljmånader · '+keys[0]+'–'+keys.at(-1)+' · USD · '+(mode==='monthly'?'Månadsvis omviktning':'Utan omviktning')+' · '+(['stocks','bonds'].some(k=>weights[k]>0&&market[k]?.basis==='price')?'ETF: utdelningar ingår ännu inte':'ETF: justerad avkastning eller ej vald');
+summary.textContent=keys.length+' portföljmånader · '+keys[0]+'–'+keys.at(-1)+' · USD · '+(mode==='monthly'?'Månadsvis omviktning':'Utan omviktning')+' · ETF: inklusive återinvesterade utdelningar, före skatt';
 const historyNote=$('adv-model-history-note');
 if(historyNote){
  const begin=modelDates.firstRolling?prevMonth(modelDates.firstRolling):null;
@@ -170,10 +167,10 @@ if(historyNote){
   ?`Modellernas kurva visas från ${begin} med de modeller som då hade startat (streckad linje). Alla markerade modeller finns med från ${common} (heldragen linje). Portföljens statistik använder samma start för alla markerade modeller.`
   :'Markera minst en modell för att visa modellhistoriken.';
 }
-const items=[[priceOnly?'Kursavkastning':'Totalavkastning',pct(s.total)],['Årlig avkastning (CAGR)',pct(s.cagr)],['Största nedgång',pct(s.dd)],['Volatilitet per år',pct(s.vol)],['Sharpekvot (ränta 0 %)',Number.isFinite(s.sharpe)?num(s.sharpe):'—'],['Positiva månader',pct(s.positive,0)]];
+const items=[['Totalavkastning',pct(s.total)],['Årlig avkastning (CAGR)',pct(s.cagr)],['Största nedgång',pct(s.dd)],['Volatilitet per år',pct(s.vol)],['Sharpekvot (ränta 0 %)',Number.isFinite(s.sharpe)?num(s.sharpe):'—'],['Positiva månader',pct(s.positive,0)]];
 metrics.innerHTML=items.map(([label,val])=>`<div class="adv-kpi"><span>${label}</span><strong class="${label==='Största nedgång'?'down':''}">${val}</strong></div>`).join('');
 const bs=benchmark?stats(benchmark.months):null;
-table.innerHTML='<thead><tr><th>Portfölj</th><th>'+(priceOnly?'Kursavkastning':'Totalavkastning')+'</th><th>CAGR</th><th>Max nedgång</th><th>Volatilitet</th></tr></thead><tbody>'+[['Vald fördelning',s],...(bs?[['Klassisk 60/40',bs]]:[])].map(([label,x])=>`<tr><th>${label}</th><td>${pct(x.total)}</td><td>${pct(x.cagr)}</td><td>${pct(x.dd)}</td><td>${pct(x.vol)}</td></tr>`).join('')+'</tbody>';
+table.innerHTML='<thead><tr><th>Portfölj</th><th>'+'Totalavkastning'+'</th><th>CAGR</th><th>Max nedgång</th><th>Volatilitet</th></tr></thead><tbody>'+[['Vald fördelning',s],...(bs?[['Klassisk 60/40',bs]]:[])].map(([label,x])=>`<tr><th>${label}</th><td>${pct(x.total)}</td><td>${pct(x.cagr)}</td><td>${pct(x.dd)}</td><td>${pct(x.vol)}</td></tr>`).join('')+'</tbody>';
 }
 function refreshWeights(){for(let k of ['stocks','bonds','algo']){$('adv-'+k+'-range').value=weights[k];$('adv-'+k+'-out').textContent=weights[k]+' %';$('adv-'+k+'-bar').style.width=weights[k]+'%'}$('adv-alloclabel').textContent='Totalt 100 % · '+weights.stocks+' % aktier · '+weights.bonds+' % obligationer · '+weights.algo+' % AlgoLodge';document.querySelectorAll('.adv-presets button').forEach(b=>b.classList.toggle('active',b.dataset.preset===`${weights.stocks},${weights.bonds},${weights.algo}`));render()}
 function changeWeight(changed,value){value=Math.min(100,Math.max(0,Math.round(value)));let others=['stocks','bonds','algo'].filter(k=>k!==changed);let rem=100-value;let old=weights[others[0]]+weights[others[1]];let first=old?Math.round(rem*weights[others[0]]/old):Math.round(rem/2);weights={[changed]:value,[others[0]]:first,[others[1]]:rem-first};refreshWeights()}
@@ -181,7 +178,21 @@ function init(){
 $('adv-legend').addEventListener('change',e=>{const cb=e.target;if(!cb.matches('input[data-line]'))return;cb.checked?visibleLines.add(cb.dataset.line):visibleLines.delete(cb.dataset.line);render()});
 $('adv-only-portfolio').addEventListener('click',()=>{visibleLines.clear();visibleLines.add('total');render()});
 $('adv-show-all').addEventListener('click',()=>{['total','stocks','bonds','algo','benchmark'].forEach(k=>visibleLines.add(k));render()});
-const grid=$('adv-models');grid.innerHTML=order.map(k=>`<label class="adv-model"><input type="checkbox" data-model="${k}" checked/>${modelNames[k]}</label>`).join('');grid.querySelectorAll('input').forEach(el=>el.addEventListener('change',()=>{el.checked?selected.add(el.dataset.model):selected.delete(el.dataset.model);render()}));$('adv-select-all').addEventListener('click',()=>{if(selected.size===order.length)selected.clear();else order.forEach(k=>selected.add(k));grid.querySelectorAll('input').forEach(el=>el.checked=selected.has(el.dataset.model));render()});for(let k of ['stocks','bonds','algo'])$('adv-'+k+'-range').addEventListener('input',e=>changeWeight(k,e.target.value));document.querySelectorAll('.adv-presets button').forEach(b=>b.addEventListener('click',()=>{let [stocks,bonds,algo]=b.dataset.preset.split(',').map(Number);weights={stocks,bonds,algo};refreshWeights()}));['adv-period','adv-rebalance'].forEach(id=>$(id).addEventListener('change',render));refreshWeights();for(let k of ['stocks','bonds'])fetch('assets/data/'+(k==='stocks'?'spy-monthly-price.csv':'agg-monthly-price.csv'),{cache:'no-store'}).then(r=>r.ok?r.text():null).then(txt=>{if(!txt)return;try{market[k]=parseMarket(txt,k);status(k,`${market[k].returns.size} avkastningsmånader laddade · ${market[k].basis==='price'?'prisdata (utan utdelningar)':'justerad / importerad avkastning'}.`,true);updateBasis(k);render()}catch(e){status(k,'Datafilen finns men saknar användbara historiska värden: '+e.message)}}).catch(()=>{});
+const grid=$('adv-models');grid.innerHTML=order.map(k=>`<label class="adv-model"><input type="checkbox" data-model="${k}" checked/>${modelNames[k]}</label>`).join('');grid.querySelectorAll('input').forEach(el=>el.addEventListener('change',()=>{el.checked?selected.add(el.dataset.model):selected.delete(el.dataset.model);render()}));$('adv-select-all').addEventListener('click',()=>{if(selected.size===order.length)selected.clear();else order.forEach(k=>selected.add(k));grid.querySelectorAll('input').forEach(el=>el.checked=selected.has(el.dataset.model));render()});for(let k of ['stocks','bonds','algo'])$('adv-'+k+'-range').addEventListener('input',e=>changeWeight(k,e.target.value));document.querySelectorAll('.adv-presets button').forEach(b=>b.addEventListener('click',()=>{let [stocks,bonds,algo]=b.dataset.preset.split(',').map(Number);weights={stocks,bonds,algo};refreshWeights()}));['adv-period','adv-rebalance'].forEach(id=>$(id).addEventListener('change',render));refreshWeights();for(const k of ['stocks','bonds']){
+ const url='assets/data/'+(k==='stocks'?'spy-monthly-total-return.csv':'agg-monthly-total-return.csv');
+ fetch(url,{cache:'no-store'}).then(response=>{
+  if(!response.ok)throw new Error('HTTP '+response.status);
+  return response.text();
+ }).then(raw=>{
+  const parsed=parseMarket(raw,k);
+  if(parsed.basis!=='total-return')throw new Error('Datafilen saknar totalavkastningsindex.');
+  market[k]=parsed;
+  render();
+ }).catch(err=>{
+  console.error('Kunde inte läsa '+url,err);
+  render();
+ });
+}
 }
 init();
 })();
