@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="assets/css/menu-3.88.css?v=388"/>
 <link rel="stylesheet" href="assets/css/modelguide-nav-4.60.css?v=460"/>
 <link rel="stylesheet" href="assets/css/navigation-footer-4.61.css?v=461"/>
-<link rel="stylesheet" href="assets/css/jamfor-modeller.css?v=6"/>
+<link rel="stylesheet" href="assets/css/jamfor-modeller.css?v=7"/>
 </head><body>
 <header class="al-header"><div class="al-header-inner"><a aria-label="AlgoLodge – startsida" class="al-brand" href="index.html"><img alt="AlgoLodge" class="al-logo-light" src="assets/images/algolodge-logo.png?v=386"/><img alt="AlgoLodge" class="al-logo-dark" src="assets/images/algolodge-logo-dark.png?v=386"/></a><nav aria-label="Main navigation" class="al-navigation" id="al-navigation"><div class="al-nav-dropdown al-why-dropdown"><a href="varfor-algolodge.html">Varför AlgoLodge?</a><button aria-expanded="false" aria-label="Visa Varför AlgoLodge-undermeny" class="al-dropdown-toggle" type="button">⌄</button><div class="al-dropdown-menu"><a href="varfor-algolodge.html#modellguide">Modellguide</a></div></div><div class="al-nav-dropdown al-models-dropdown"><a href="investeringsmodeller.html">Investeringsmodeller</a><button aria-expanded="false" aria-label="Visa Investeringsmodeller-undermeny" class="al-dropdown-toggle" type="button">⌄</button><div class="al-dropdown-menu"><a href="jamfor-modeller.html">Jämför modeller</a></div></div><div class="al-nav-dropdown al-how-dropdown"><a href="sa-fungerar-det.html">Så fungerar det</a><button aria-expanded="false" aria-label="Visa Så fungerar det-undermeny" class="al-dropdown-toggle" type="button">⌄</button><div class="al-dropdown-menu"><a href="sa-fungerar-det.html#fragor-och-svar">Frågor och svar</a></div></div><div class="al-nav-dropdown"><a href="evenemang.html">Aktuellt</a><button aria-expanded="false" aria-label="Visa Aktuellt-undermeny" class="al-dropdown-toggle" type="button">⌄</button><div class="al-dropdown-menu"><a href="evenemang.html#traffa-oss">Träffa oss</a><a href="evenemang.html#manadsrapport">Månadsrapport</a><a href="evenemang.html#onlinemoten">Onlinemöten</a></div></div><a href="om-oss.html">Om oss</a><a href="kontakt.html">Kontakt</a><a class="al-menu-primary" href="oppna-konto.html">Öppna konto</a></nav><div class="al-controls"><select aria-label="Språk" id="lang"><option value="sv">SE</option><option value="en">EN</option></select><button aria-controls="al-navigation" aria-expanded="false" aria-label="Öppna menyn" class="al-mobile" id="menu" type="button">☰</button></div></div></header>
 <main id="main-content" class="cmp-page">
@@ -30,8 +30,15 @@
 <div class="cmp-workspace">
 <section class="cmp-panel cmp-select-panel" aria-label="Välj investeringsmodeller"><div class="cmp-panel-head"><div><h2>Välj investeringsmodeller</h2><p class="cmp-sub">Markera modellerna – grafen uppdateras direkt.</p></div><div class="cmp-header-actions"><button class="cmp-text-button" type="button" id="compare-select-all">Välj alla</button></div></div>
 <div class="cmp-choice-grid" id="compare-models" role="group" aria-label="Investeringsmodeller"></div>
+<details class="cmp-weight-details" id="compare-weight-details">
+  <summary><span class="cmp-weight-details-title"><strong>Avancerad fördelning</strong><span>Justera kapitalet mellan de valda modellerna</span></span><span class="cmp-weight-state" id="compare-weight-state">Lika vikt</span><span class="cmp-weight-chevron" aria-hidden="true">⌄</span></summary>
+  <div class="cmp-weight-inner"><p>Fördelningen gäller endast de markerade modellerna och summerar alltid till 100 %. Grafen och statistiken uppdateras direkt.</p>
+    <div id="compare-weight-controls" class="cmp-weight-controls" role="group" aria-label="Andel per investeringsmodell"></div>
+    <div class="cmp-weight-footer"><output id="compare-weight-total" aria-live="polite">Summa: 100 %</output><button type="button" id="compare-weight-reset">Återställ lika vikt</button></div>
+  </div>
+</details>
 <div class="cmp-options"><div class="cmp-field"><label for="compare-period">Jämförelseperiod</label><select id="compare-period"><option value="all">Hela gemensamma historiken</option><option value="12">Senaste 12 månaderna</option><option value="36">Senaste 36 månaderna</option><option value="60">Senaste 60 månaderna</option></select></div>
-<div class="cmp-field"><label for="compare-rebalance">Beräkning av portfölj</label><select id="compare-rebalance"><option value="monthly">Lika vikt – omviktning varje månad</option><option value="hold">Lika vikt vid start – utan omviktning</option></select></div></div>
+<div class="cmp-field"><label for="compare-rebalance">Beräkning av portfölj</label><select id="compare-rebalance"><option value="monthly">Omviktning varje månad</option><option value="hold">Behåll startvikterna</option></select></div></div>
 <p id="compare-time" class="cmp-time" aria-live="polite">Laddar jämförelsedata …</p><p id="compare-notice" class="cmp-notice" role="status" aria-live="polite"></p><a class="cmp-advanced-link" href="avancerad-portfolj.html"><span class="cmp-advanced-link-copy"><small>PORTFÖLJJÄMFÖRELSE</small><strong>Jämför med aktier och obligationer</strong></span><span class="cmp-advanced-arrow" aria-hidden="true">↗</span></a></section>
 <section class="cmp-chart-card cmp-feature-chart" aria-labelledby="cmp-combined-heading"><div class="cmp-feature-topline"><span class="cmp-feature-eyebrow">DIN VALDA PORTFÖLJ</span><span class="cmp-weight-summary" id="compare-weight-summary" aria-live="polite">Lika vikt mellan valda modeller</span></div>
 <div class="cmp-chart-header cmp-feature-heading"><div><h2 id="cmp-combined-heading">Kombinerad utveckling</h2><p>Så hade de valda modellerna utvecklats tillsammans. Startvärde 100.</p></div>
@@ -45,7 +52,7 @@
 <section class="cmp-panel" aria-labelledby="cmp-method-heading"><h2 id="cmp-method-heading">Om beräkningarna</h2><p class="cmp-sub">Uppdaterat med månadsresultat till och med september 2026. Jämförelsen bygger på modellernas rapporterade månadsavkastningar.</p>
 <details class="cmp-details"><summary>Visa beräkningsmetod och definitioner</summary>
 <p><strong>Gemensam start:</strong> Den kombinerade portföljen, statistiken och korrelationerna använder enbart den gemensamma tidsperioden för valda modeller. I diagrammet ”Modellernas utveckling” visas som standard varje modells hela historik från dess egen resultatstart, med index 100. Det går även att välja enbart den gemensamma perioden.</p>
-<p><strong>Kombinerad portfölj:</strong> I standardläget har alla valda modeller samma vikt i början av varje månad. Portföljens månadsavkastning är då det aritmetiska medelvärdet av modellernas månadsavkastningar. Alternativet utan omviktning innebär att samma kapitaldel tilldelas varje modell vid start, därefter får vikterna förändras av utvecklingen.</p>
+<p><strong>Kombinerad portfölj:</strong> Som standard fördelas kapitalet lika mellan valda modeller. Under ”Avancerad fördelning” kan du ange egna procentandelar, som alltid summerar till 100 %. Vid månadsvis omviktning används samma valda procentandelar varje månad. ”Behåll startvikterna” innebär att kapitalet fördelas enligt de valda andelarna från början, men sedan får andelarna förändras med modellernas resultat.</p>
 <p><strong>Statistik:</strong> Totalavkastningen beräknas genom geometrisk kedjning av månadsavkastningarna. CAGR är annualiserad geometrisk avkastning. Maximal nedgång är den största procentuella nedgången från en tidigare topp i den månatligt beräknade indexkurvan. Volatilitet är månadsavkastningarnas stickprovsstandardavvikelse multiplicerad med √12. Sharpekvoten är genomsnittlig månadsavkastning dividerad med stickprovsstandardavvikelsen, multiplicerad med √12. Riskfri ränta sätts till 0 %. Korrelationen är Pearsons korrelationskoefficient för månadsavkastningar.</p>
 </details>
 
@@ -59,5 +66,5 @@
 <script src="assets/js/aktuellt-dropdown.js?v=326" defer></script>
 <script src="assets/js/header-3.75.js?v=375" defer></script>
 <script src="assets/js/jamfor-modeller-data.js?v=1" defer></script>
-<script src="assets/js/jamfor-modeller.js?v=2" defer></script>
+<script src="assets/js/jamfor-modeller.js?v=8" defer></script>
 </body></html>

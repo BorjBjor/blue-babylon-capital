@@ -10,6 +10,129 @@
   };
   const order = ['hotCommodities', 'softCommodities', 'goldBug', 'kryptoKnight', 'satoshi', 'vitalik'];
   const selected = new Set(order);
+  // Individuella modellvikter anges i tiondels procent för exakt totalsumma.
+  const allocations = new Map();
+  let individuallyWeighted = false;
+  const allocationList = root.querySelector('#compare-weight-controls');
+  const allocationLabel = root.querySelector('#compare-weight-state');
+  const allocationTotal = root.querySelector('#compare-weight-total');
+
+  function enabledModels() { return order.filter(name => selected.has(name)); }
+
+  // Avrunda proportioner och tilldela eventuella rester i storleksordning.
+  function proportions(names, suggested) {
+    if (names.length === 0) return new Map();
+    const minimum = 1; // 0,1 procent för varje vald modell.
+    const unitsToShare = 1000 - minimum * names.length;
+    const initial = names.map(name => Math.max(0, Number(suggested.get(name)) || 0));
+    const sum = initial.reduce((a, value) => a + value, 0);
+    const fractions = initial.map(value => sum > 0 ? value / sum : 1 / names.length);
+    const scaled = fractions.map(fraction => fraction * unitsToShare);
+    const rounded = scaled.map(amount => Math.floor(amount));
+    const spare = unitsToShare - rounded.reduce((a, value) => a + value, 0);
+    const ranking = names.map((name, index) => ({ index, fraction: scaled[index] - rounded[index] }));
+    ranking.sort((a, b) => b.fraction - a.fraction || a.index - b.index);
+    for (let i = 0; i < spare; i++) rounded[ranking[i].index] += 1;
+    return new Map(names.map((name, i) => [name, minimum + rounded[i]]));
+  }
+
+  function equalAllocation() {
+    const names = enabledModels();
+    const each = new Map(names.map(name => [name, 1]));
+    allocations.clear();
+    for (const [name, units] of proportions(names, each)) allocations.set(name, units);
+    individuallyWeighted = false;
+  }
+
+  function adjustForSelection() {
+    if (!individuallyWeighted) return equalAllocation();
+    const names = enabledModels();
+    const average = names.length ? 1000 / names.length : 0;
+    const estimated = new Map(names.map(name => [name, allocations.get(name) ?? average]));
+    allocations.clear();
+    for (const [name, units] of proportions(names, estimated)) allocations.set(name, units);
+    if (names.length <= 1) individuallyWeighted = false;
+  }
+
+  function setAllocation(name, percent) {
+    const names = enabledModels();
+    if (!names.includes(name)) return;
+    if (names.length <= 1) return equalAllocation();
+    const units = Math.max(1, Math.min(1000 - names.length + 1, Math.round(percent * 10)));
+    const otherNames = names.filter(other => other !== name);
+    const remaining = 1000 - units;
+    const old = new Map(otherNames.map(other => [other, Math.max(0, (allocations.get(other) || 0) - 1)]));
+    const others = proportionsWithTotal(otherNames, old, remaining);
+    allocations.clear();
+    allocations.set(name, units);
+    for (const [other, number] of others) allocations.set(other, number);
+    individuallyWeighted = true;
+  }
+
+  function proportionsWithTotal(names, values, total) {
+    // Samma avrundningsprincip för den återstående kapitalandelen.
+    const result = new Map();
+    if (!names.length) return result;
+    const minimum = 1;
+    const distributable = total - names.length * minimum;
+    const amounts = names.map(name => Math.max(0, Number(values.get(name)) || 0));
+    const sum = amounts.reduce((a, value) => a + value, 0);
+    const fractions = amounts.map(value => sum > 0 ? value / sum : 1 / names.length);
+    const exact = fractions.map(fraction => fraction * distributable);
+    const base = exact.map(value => Math.floor(value));
+    let extras = distributable - base.reduce((a, value) => a + value, 0);
+    const indices = names.map((_, i) => i).sort((a, b) => (exact[b] - base[b]) - (exact[a] - base[a]) || a-b);
+    for (let i = 0; i < extras; i++) base[indices[i]] += 1;
+    names.forEach((name, i) => result.set(name, minimum + base[i]));
+    return result;
+  }
+
+  function refreshAllocationView() {
+    const names = enabledModels();
+    for (const input of allocationList.querySelectorAll('input[data-allocation]')) {
+      const current = (allocations.get(input.dataset.allocation) || 0) / 10;
+      input.max = (100 - (names.length - 1) * 0.1).toFixed(1);
+      input.value = String(current);
+      const output = input.parentElement.querySelector('output');
+      if (output) output.textContent = fmtNumber(current, 1) + ' %';
+    }
+    if (allocationLabel) allocationLabel.textContent = individuallyWeighted ? 'Egen fördelning' : 'Lika vikt';
+    const sum = names.reduce((acc, name) => acc + (allocations.get(name) || 0), 0);
+    if (allocationTotal) allocationTotal.textContent = 'Summa: ' + fmtNumber(sum / 10, 1) + ' %';
+  }
+
+  function buildAllocationInputs() {
+    allocationList.replaceChildren();
+    for (const name of enabledModels()) {
+      const row = document.createElement('div');
+      row.className = 'cmp-weight-row';
+      const header = document.createElement('div');
+      header.className = 'cmp-weight-row-title';
+      const label = document.createElement('label');
+      const input = document.createElement('input');
+      const output = document.createElement('output');
+      const id = 'model-allocation-' + name;
+      label.htmlFor = id;
+      label.textContent = dataset.models[name].label;
+      input.id = id;
+      input.type = 'range';
+      input.min = '0.1';
+      input.step = '0.1';
+      input.dataset.allocation = name;
+      input.disabled = enabledModels().length === 1;
+      input.setAttribute('aria-label', 'Kapitalandel för ' + dataset.models[name].label);
+      output.htmlFor = id;
+      header.append(label, output);
+      row.append(header, input);
+      allocationList.append(row);
+    }
+    refreshAllocationView();
+  }
+
+  function selectedShares(names) {
+    if (!individuallyWeighted) return names.map(() => 1 / names.length);
+    return names.map(name => (allocations.get(name) || 0) / 1000);
+  }
   const checkboxes = root.querySelector('#compare-models');
   const period = root.querySelector('#compare-period');
   const rebalance = root.querySelector('#compare-rebalance');
@@ -49,7 +172,7 @@
       }
       notice.textContent = '';
       this.checked?selected.add(this.value):selected.delete(this.value);
-      renderChoices(); render();
+      adjustForSelection(); renderChoices(); buildAllocationInputs(); render();
     }));
   }
 
@@ -97,8 +220,9 @@
   }
 
   function makePortfolio(keys,dates,method) {
-    if(method==='monthly' || keys.length===1) return dates.map(d=>keys.reduce((sum,k)=>sum+retMap[k].get(d),0)/keys.length);
-    let components=keys.map(()=>1/keys.length);
+    const shares=selectedShares(keys);
+    if(method==='monthly' || keys.length===1) return dates.map(d=>keys.reduce((sum,k,i)=>sum+shares[i]*retMap[k].get(d),0));
+    let components=shares.slice();
     return dates.map(d=>{
       const start=components.reduce((a,b)=>a+b,0);
       components=components.map((weight,i)=>weight*(1+retMap[keys[i]].get(d)));
@@ -202,7 +326,7 @@
     const stats=Object.fromEntries(keys.map(k=>[k,makeStats(returns[k])]));
     const combinedReturns=makePortfolio(keys,dates,rebalance.value);
     const combinedStats=makeStats(combinedReturns);
-    weightSummary.textContent=`${keys.length} ${keys.length===1?'modell':'modeller'} · ${fmtPct(1/keys.length,keys.length===3||keys.length===6?1:0)} per modell vid start`;
+    weightSummary.textContent=individuallyWeighted ? `Egen fördelning · ${keys.length} modeller` : `${keys.length} ${keys.length===1?'modell':'modeller'} · ${fmtPct(1/keys.length,keys.length===3||keys.length===6?1:0)} per modell vid start`;
     mainReturn.textContent=fmtPct(combinedStats.total);
     const combinedSeries={key:'portfolio',label:keys.length>1?'Kombinerad portfölj':dataset.models[keys[0]].label,values:combinedStats.values,color:palette.portfolio};
     const modelSeries=keys.map(k=>({key:k,label:dataset.models[k].label,values:stats[k].values,color:palette[k]}));
@@ -240,9 +364,19 @@
         }).join('')}</tr>`).join('')+'</tbody>';
     }
   }
-  root.querySelector('#compare-select-all').addEventListener('click',()=>{order.forEach(k=>selected.add(k));notice.textContent='';renderChoices();render();});
+  root.querySelector('#compare-select-all').addEventListener('click',()=>{order.forEach(k=>selected.add(k));adjustForSelection();notice.textContent='';renderChoices();buildAllocationInputs();render();});
+  allocationList.addEventListener('input',event=>{
+    const control=event.target;
+    if (!control.matches('input[data-allocation]')) return;
+    setAllocation(control.dataset.allocation, Number(control.value));
+    refreshAllocationView();
+    render();
+  });
+  root.querySelector('#compare-weight-reset').addEventListener('click',()=>{
+    equalAllocation(); refreshAllocationView(); render();
+  });
   period.addEventListener('change',()=>{notice.textContent='';render();});
   rebalance.addEventListener('change',()=>{notice.textContent='';render();});
   modelHistory.addEventListener('change',()=>{notice.textContent='';render();});
-  renderChoices();render();
+  equalAllocation();renderChoices();buildAllocationInputs();render();
 })();

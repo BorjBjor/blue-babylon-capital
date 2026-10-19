@@ -240,3 +240,38 @@ body.dark .cmp-select-panel>.cmp-advanced-link{background:#243d54;border-color:#
 body.dark .cmp-select-panel .cmp-advanced-link-copy strong{color:#e5f1fa}
 body.dark .cmp-select-panel .cmp-advanced-arrow{background:#3b5b72;color:#eaf2f8}
 @media(max-width:720px){.cmp-hero-actions{max-width:100%;justify-content:flex-start}}
+
+/* Anpassad fördelning mellan modeller; hopfälld tills besökaren själv öppnar den. */
+.cmp-weight-details{margin-top:14px;border:1px solid #cfdfeb;background:#f8fbfd;border-radius:11px;overflow:hidden}
+.cmp-weight-details summary{display:flex;align-items:center;gap:9px;cursor:pointer;list-style:none;padding:12px 11px;color:#214d6d}
+.cmp-weight-details summary::-webkit-details-marker{display:none}
+.cmp-weight-details summary:focus-visible{outline:2px solid #477eab;outline-offset:-2px}
+.cmp-weight-details-title{display:flex;flex:1;min-width:0;flex-direction:column;gap:3px}
+.cmp-weight-details-title strong{font-size:12px;font-weight:750}
+.cmp-weight-details-title>span{font-size:11px;line-height:1.45;color:#617b8e}
+.cmp-weight-state{flex:none;color:#3c6685;background:#eaf2f8;border-radius:999px;font-weight:700;font-size:10px;padding:6px 8px;white-space:nowrap}
+.cmp-weight-chevron{flex:none;color:#3c6685;font-size:19px;line-height:1;transition:transform .18s ease}
+.cmp-weight-details[open] .cmp-weight-chevron{transform:rotate(180deg)}
+.cmp-weight-inner{padding:0 12px 13px;border-top:1px solid #e3ecf3}
+.cmp-weight-inner>p{font-size:11px;line-height:1.55;color:#617b8e;margin:11px 0}
+.cmp-weight-controls{display:grid;gap:11px}
+.cmp-weight-row{background:#fff;border:1px solid #e1eaf0;border-radius:9px;padding:10px 11px}
+.cmp-weight-row-title{display:flex;justify-content:space-between;gap:9px;align-items:center;font-size:12px;color:#244864;font-weight:650;margin-bottom:8px}
+.cmp-weight-row-title output{font-weight:800;color:#1b608e;white-space:nowrap}
+.cmp-weight-row input[type=range]{width:100%;margin:0;accent-color:#1e648d;cursor:pointer}
+.cmp-weight-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:13px}
+.cmp-weight-footer output{font-size:11px;font-weight:750;color:#405e74}
+.cmp-weight-footer button{border:1px solid #c8d9e6;background:#fff;color:#22577b;border-radius:8px;font:700 11px Inter,Arial,sans-serif;padding:8px 10px;cursor:pointer}
+.cmp-weight-footer button:hover{background:#edf5fa}
+body.dark .cmp-weight-details{background:#1d374d;border-color:#3c5a70;color:#ecf4fa}
+body.dark .cmp-weight-row{background:#244159;border-color:#3c5a70}
+body.dark .cmp-weight-details-title>span,body.dark .cmp-weight-inner>p{color:#c2d5e4}
+body.dark .cmp-weight-row-title,body.dark .cmp-weight-row-title output,body.dark .cmp-weight-footer output{color:#eef6fc}
+@media(max-width:560px){.cmp-weight-details summary{flex-wrap:wrap}.cmp-weight-state{margin-left:auto}}
+
+/* Ändrad viktning: diagramkortet ska inte dra ut sin höjd när reglagen fälls ut. */
+@media(min-width:851px){
+ .cmp-workspace:has(.cmp-weight-details[open]){align-items:start}
+ .cmp-workspace:has(.cmp-weight-details[open]) .cmp-feature-chart{align-self:start;width:100%}
+ .cmp-workspace:has(.cmp-weight-details[open]) .cmp-feature-note{margin-top:15px}
+}
