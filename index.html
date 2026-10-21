@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Börstjänaren – analyser, marknadsperspektiv och utbildning inom aktier, råvaror och valutor. Testversion.">
+  <title>Börstjänaren – marknad, analys och kunskap</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/data.js"></script>
+  <script defer src="js/main.js"></script>
+</head>
+<body>
+  <div class="topline"><div class="wrap topline-inside"><span>OBEROENDE MARKNADSPERSPEKTIV SEDAN 2006</span><span id="today"></span></div></div>
+  <header class="masthead"><div class="wrap brand-row">
+    <a href="./" class="brand" aria-label="Börstjänaren startsida"><img src="assets/logo.svg" alt="Börstjänaren" width="376" height="70"></a>
+    <div class="brand-aside"><span class="orange-dot"></span> Analyser för aktiva investerare <span class="mini-separator">|</span> <a href="admin.html">Redaktionens inloggning →</a></div>
+    <button class="mobile-menu" id="menuToggle" aria-expanded="false" aria-controls="primaryNav">☰ <span>Meny</span></button>
+  </div></header>
+  <nav class="nav-main" id="primaryNav" aria-label="Huvudmeny"><div class="wrap nav-scroll">
+    <a href="./" data-category="Alla" class="active">Start</a>
+    <a href="?kategori=Aktier" data-category="Aktier">Aktier</a>
+    <a href="?kategori=Råvaror" data-category="Råvaror">Råvaror</a>
+    <a href="?kategori=Valutor" data-category="Valutor">Valutor</a>
+    <a href="?kategori=Index" data-category="Index">Index</a>
+    <a href="?kategori=VM%20Update" data-category="VM Update">VM Update</a>
+    <a href="?kategori=Utbildning" data-category="Utbildning">Utbildning</a>
+    <a href="?kategori=Krönika" data-category="Krönika">Krönika</a>
+  </div></nav>
+  <div class="nav-sub"><div class="wrap sub-inner"><div class="sub-links"><span class="sub-label">BÖRSTJÄNAREN</span><a href="#senaste" id="latestLink">Senaste artiklarna</a><a href="?kategori=Analys" data-category="Analys">Analyser</a><a href="?kategori=Webinarium" data-category="Webinarium">Webinarium</a><a href="#om">Om oss</a></div>
+    <form id="searchForm" class="search" role="search"><label class="sr-only" for="searchInput">Sök artiklar</label><input id="searchInput" placeholder="Sök artiklar..." autocomplete="off"><button type="submit" aria-label="Sök">⌕</button></form>
+  </div></div>
+  <main id="content" class="wrap" tabindex="-1"><div class="loading">Hämtar artiklar…</div></main>
+  <footer id="om"><div class="wrap footer-grid"><div><img src="assets/logo.svg" alt="Börstjänaren" width="236" height="44"><p>Marknadsanalyser, utbildning och perspektiv på finansmarknaderna – sedan 2006.</p></div><div><strong>Utforska</strong><a href="?kategori=Aktier">Aktier</a><a href="?kategori=Råvaror">Råvaror</a><a href="?kategori=Valutor">Valutor</a></div><div><strong>Redaktion</strong><a href="admin.html">Logga in</a><a href="https://borstjanaren.se" target="_blank" rel="noopener">Nuvarande webbplats ↗</a></div></div><div class="wrap footer-bottom">© <span id="year"></span> Börstjänaren · Testversion <span>Innehållet är exempel och utgör inte investeringsrådgivning.</span></div></footer>
+</body>
+</html>

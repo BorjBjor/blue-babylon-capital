@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="376" height="70" viewBox="0 0 376 70" role="img" aria-label="Börstjänaren">
+  <g transform="translate(1 5)">
+    <rect x="0" y="0" width="58" height="58" rx="12" fill="#ee7136"/>
+    <path d="M11 39 L22 30 L30 34 L42 19 L48 23" stroke="#fff" stroke-width="4.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M11 47h37" stroke="#fff" stroke-width="2" opacity=".45"/>
+    <circle cx="42" cy="19" r="3.3" fill="#fff"/>
+  </g>
+  <text x="74" y="42" font-family="Arial,Helvetica,sans-serif" font-size="31" font-weight="800" letter-spacing="-1.7" fill="#122b39">BÖRSTJÄNAREN</text>
+  <text x="76" y="59" font-family="Arial,Helvetica,sans-serif" font-size="8.5" font-weight="700" letter-spacing="3" fill="#788891">MARKNAD • ANALYS • KUNSKAP</text>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#173a48"/><stop offset="1" stop-color="#0a1c2a"/></linearGradient><linearGradient id="fill" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f6ad64" stop-opacity=".35"/><stop offset="1" stop-color="#f6ad64" stop-opacity="0"/></linearGradient></defs>
+<rect width="1200" height="720" fill="url(#bg)"/>
+<g stroke="#93b8c5" stroke-opacity=".115" stroke-width="1"><path d="M0 100H1200M0 210H1200M0 320H1200M0 430H1200M0 540H1200M0 650H1200"/><path d="M120 0V720M290 0V720M460 0V720M630 0V720M800 0V720M970 0V720M1140 0V720"/></g>
+<path d="M0 560L70 535L150 560L228 480L305 502L383 462L470 490L545 420L640 449L710 355L784 398L846 293L928 332L993 245L1075 270L1138 160L1200 184V720H0Z" fill="url(#fill)"/>
+<path d="M0 560L70 535L150 560L228 480L305 502L383 462L470 490L545 420L640 449L710 355L784 398L846 293L928 332L993 245L1075 270L1138 160L1200 184" fill="none" stroke="#f6a362" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M0 605L80 617L160 600L245 627L330 580L415 602L500 562L580 582L660 558L750 528L830 544L930 488L1020 500L1120 455L1200 468" fill="none" stroke="#6fbac2" stroke-opacity=".48" stroke-width="3"/>
+<circle cx="1138" cy="160" r="10" fill="#f6a362" stroke="#fce1ba" stroke-width="4"/>
+<g fill="#dceaf0" opacity=".25" font-family="Arial,sans-serif" font-size="18"><text x="54" y="126">MARKNADSÖVERSIKT</text><text x="960" y="680">ILLUSTRATION</text></g>
+</svg>
