@@ -1,4 +1,0 @@
-/* Keep expanded contact forms fully reachable below the fixed/sticky navigation. */
-#al-open-contact-panel,#avatrade-contact-panel{scroll-margin-top:112px;overflow:visible}
-@media(max-width:1199px){#al-open-contact-panel,#avatrade-contact-panel{scroll-margin-top:100px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
