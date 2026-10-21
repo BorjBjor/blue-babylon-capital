@@ -1,1 +1,0 @@
-(()=>{function update(){document.querySelectorAll('#al-navigation').forEach(n=>{const a=n.querySelector('a[href="evenemang.html"]');if(a){a.textContent='Aktuellt';a.dataset.nav='events'}})}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',update);else update()})();

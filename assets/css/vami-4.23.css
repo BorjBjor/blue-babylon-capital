@@ -1,8 +1,0 @@
-/* AlgoLodge 4.23: VAMI graph with accessible explanatory tooltip */
-.iasg-section-head h2{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
-.al-vami-help{position:relative;display:inline-grid;place-items:center;flex:none;width:19px;height:19px;border-radius:50%;border:1px solid #b4d0e4;background:#e8f3fb;color:#1768a1;font:700 12px/1 Inter,system-ui,sans-serif;cursor:help;padding:0}
-.al-vami-help:hover,.al-vami-help:focus-visible{background:#d0e9f8;outline:2px solid transparent}
-.al-vami-tooltip{position:absolute;bottom:calc(100% + 11px);left:50%;transform:translateX(-50%);z-index:70;width:min(340px,78vw);background:#203345;color:#f5f8fc;font:400 13px/1.65 Inter,system-ui,sans-serif;padding:15px 17px;border-radius:9px;box-shadow:0 12px 28px #0a21383b;text-align:left;white-space:normal;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .14s}
-.al-vami-help:hover .al-vami-tooltip,.al-vami-help:focus-visible .al-vami-tooltip,.al-vami-help[aria-expanded=true] .al-vami-tooltip{opacity:1;visibility:visible}
-.al-vami-caption{font-size:12px;color:#647e92;margin:8px 0 2px}
-@media(max-width:700px){.al-vami-tooltip{left:auto;right:-45px;transform:none}}

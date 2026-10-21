@@ -1,8 +1,0 @@
-/* AlgoLodge 4.30 – expanded biography and X link */
-.about25-manager-card{grid-template-columns:290px minmax(0,1fr);align-items:stretch}
-.about25-manager-copy{padding-top:35px;padding-bottom:35px}
-.about25-manager-copy p{margin-bottom:15px}
-.about25-social-link{display:inline-flex;align-items:center;gap:9px;margin-top:8px;padding:11px 15px;border:1px solid #cbdce9;border-radius:9px;background:#f2f7fb;color:#17659e!important;font:700 13px/1.4 system-ui,sans-serif;text-decoration:none;transition:background .2s}
-.about25-social-link:hover{background:#e5f0f9}
-@media(max-width:920px){.about25-manager-card{grid-template-columns:240px minmax(0,1fr)}}
-@media(max-width:650px){.about25-manager-card{grid-template-columns:1fr}}

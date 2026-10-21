@@ -1,7 +1,0 @@
-/* Discreet contact illustration; retains original v3.77 layout and copy */
-.al-contact-hero-compact{position:relative;padding-right:195px!important;min-height:170px;display:flex;flex-direction:column;justify-content:center}
-.al-contact-small-illustration{position:absolute;right:22px;top:50%;transform:translateY(-50%);width:154px;height:154px;object-fit:contain;opacity:.95;filter:drop-shadow(0 8px 16px rgba(20,60,95,.07))}
-.al-contact-channel{transition:border-color .2s ease,transform .2s ease}
-.al-contact-channel:hover{transform:translateY(-1px)}
-@media(max-width:760px){.al-contact-hero-compact{padding-right:28px!important;min-height:0}.al-contact-small-illustration{display:none}}
-@media(prefers-reduced-motion:reduce){.al-contact-channel{transition:none}}

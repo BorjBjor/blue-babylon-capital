@@ -1,5 +1,0 @@
-/* AlgoLodge 3.88 — clear navigation hierarchy */
-@media(min-width:1200px){.al-header .al-navigation{gap:clamp(12px,1.3vw,23px)!important}.al-header .al-navigation>a.al-menu-primary{background:#1768c4!important;color:#fff!important;border:1px solid #1768c4!important;border-radius:9px!important;padding:10px 16px!important;box-shadow:0 3px 8px #185d9d16!important;font-weight:700!important;transition:background .2s ease,transform .2s ease}.al-header .al-navigation>a.al-menu-primary:hover{background:#11549f!important;transform:translateY(-1px)}}
-@media(max-width:1199px){.al-header .al-navigation>a.al-menu-primary{background:#1768c4!important;color:#fff!important;border-radius:8px!important;margin-top:12px!important;padding:13px 17px!important;font-weight:750!important;text-align:center!important}}
-body.dark .al-header .al-navigation>a.al-menu-primary{background:#2679d8!important;color:#fff!important}
-@media(prefers-reduced-motion:reduce){.al-header .al-navigation>a.al-menu-primary{transition:none!important}}

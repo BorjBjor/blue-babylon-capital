@@ -1,5 +1,0 @@
-
-/* 3.91 Webinar signup uses external GoToWebinar link, no local form. */
-.al-webinar-cta{display:inline-flex;align-items:center;justify-content:center;padding:14px 19px;background:#1265c6;color:#fff!important;border-radius:9px;font-size:14px;font-weight:750;text-decoration:none!important;margin-top:18px;transition:background .2s,transform .2s}
-.al-webinar-cta:hover{background:#0b4f9f;transform:translateY(-2px)}
-#meeting-signup .events-form-card{min-height:210px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
