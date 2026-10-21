@@ -1,3 +1,0 @@
-User-agent: *
-Disallow: /
-# STAGING ONLY. Replace before production launch.
